@@ -1,0 +1,39 @@
+{
+  "name": "vue3-menus",
+  "version": "1.0.0",
+  "author": "xufangyi",
+  "private": false,
+  "description": "Vue3.0 左右键菜单",
+  "keywords": [
+    "vue",
+    "vue3",
+    "vue3-menus",
+    "contextmenu",
+    "vue-contextmenu",
+    "vue3-contextmenu"
+  ],
+  "main": "lib/vue3-menus.umd.min.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "package.json",
+    "README.md",
+    ".gitignore",
+    "LICENSE",
+    "lib"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xfy520/vue3-menus.git"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name vue3-menus ./package/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@vue/cli-service": "^4.5.13",
+    "@vue/compiler-sfc": "3.0.0",
+    "vue": "3.0.0"
+  }
+}
