@@ -22,7 +22,6 @@ function menusEvent(value, event) {
   }
 
   let instance = createApp(Menus, {
-    hasIcon: temp.hasIcon || false,
     iconName: temp.iconName,
     menus: temp.menus || [],
     menusStyle: temp.menusStyle || {},
@@ -34,9 +33,10 @@ function menusEvent(value, event) {
   lastInstance = instance.mount(document.createElement("div"));
   lastInstance.$unmount = instance.unmount;
   event.preventDefault();
-  event.stopPropagation();
-  document.addEventListener("click", mouseEvent);
-  document.addEventListener("wheel", mouseEvent);
+  setTimeout(() => {
+    document.addEventListener("click", mouseEvent);
+    document.addEventListener("wheel", mouseEvent);
+  }, 0);
 }
 
 export default menusEvent;

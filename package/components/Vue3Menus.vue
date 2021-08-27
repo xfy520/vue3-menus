@@ -7,10 +7,6 @@ import Menus from './Menus.vue';
 export default defineComponent({
   name: "Vue3Menus",
   props: {
-    hasIcon: {
-      type: Boolean,
-      default: false
-    },
     iconName: {
       type: String
     },
@@ -64,7 +60,6 @@ export default defineComponent({
           lastInstance = null;
         }
         const node = h(Menus, {
-          hasIcon: props.hasIcon,
           iconName: props.iconName,
           menus: props.menus,
           menusStyle: props.menusStyle,

@@ -1,9 +1,8 @@
 import { createApp } from 'vue';
 
-import Menus from './../lib/vue3-menus.umd.min';
+import Menus from './../package/index';
 import App from './App.vue';
 
-import './../lib/vue3-menus.css'
 
 const app = createApp(App);
 

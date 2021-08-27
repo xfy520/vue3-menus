@@ -42,22 +42,17 @@
 </template>
 
 <script>
-import { ref, h, defineComponent, onMounted, createApp, nextTick } from "vue";
+import { ref, h, defineComponent, onMounted, createApp, nextTick, defineAsyncComponent } from "vue";
 import Menus from './Menus.vue';
-import MenusItem from './MenusItem.vue'
 
 export default defineComponent({
   name: "menus",
   components: {
-    MenusItem
+    MenusItem: defineAsyncComponent(() => import('./MenusItem.vue'))
   },
   props: {
     iconName: {
       type: String
-    },
-    hasIcon: {
-      type: Boolean,
-      default: false
     },
     menus: {
       type: Array,
@@ -113,6 +108,7 @@ export default defineComponent({
     const _direction = ref(props.direction);
     const activeIndex = ref(-1);
     const open = ref(false);
+    const hasIcon = ref(false);
 
     function leftOpen(menusWidth) {
       style.value.left = _position.value.x - menusWidth;
@@ -142,6 +138,9 @@ export default defineComponent({
 
     onMounted(() => {
       open.value = true;
+      props.menus.forEach(menu => {
+        hasIcon.value = hasIcon.value || menu.icon !== undefined;
+      });
       nextTick(() => {
         const menusWidth = menusRef.value.offsetWidth;
         const menusHeight = menusRef.value.offsetHeight;
@@ -176,7 +175,6 @@ export default defineComponent({
       }
       const menuItemClientRect = event.target.getBoundingClientRect();
       const node = h(Menus, {
-        hasIcon: props.hasIcon,
         iconName: props.iconName,
         menus: item.children || [],
         direction: _direction.value,
@@ -209,6 +207,7 @@ export default defineComponent({
 
     return {
       open,
+      hasIcon,
       menusRef,
       style,
       close,
@@ -240,7 +239,7 @@ export default defineComponent({
 .menus-fade-leave-active {
   transition: opacity 0.15s ease;
 }
-.menus-fade-enter-from,
+.menus-fade-enter,
 .menus-fade-leave-to {
   opacity: 0;
 }
