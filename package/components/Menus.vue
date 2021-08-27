@@ -42,13 +42,14 @@
 </template>
 
 <script>
-import { ref, h, defineComponent, onMounted, createApp, nextTick, defineAsyncComponent } from "vue";
+import { ref, h, defineComponent, onMounted, createApp, nextTick } from "vue";
 import Menus from './Menus.vue';
+import MenusItem from './MenusItem.vue'
 
 export default defineComponent({
   name: "menus",
   components: {
-    MenusItem: defineAsyncComponent(() => import('./MenusItem.vue'))
+    MenusItem
   },
   props: {
     iconName: {
@@ -239,7 +240,7 @@ export default defineComponent({
 .menus-fade-leave-active {
   transition: opacity 0.15s ease;
 }
-.menus-fade-enter,
+.menus-fade-enter-from,
 .menus-fade-leave-to {
   opacity: 0;
 }
