@@ -17,20 +17,20 @@
                 :index="index"
                 :activeIndex="activeIndex"
                 @menusEnter="menusEnter"
-                :iconName="iconName"
+                :menusItemClass="menusItemClass"
                 :hasIcon="hasIcon"
               >
                 <template v-if="slots.default" #default="{ item }">
                   <slot :item="item"></slot>
                 </template>
-                <template v-if="!slots.default && slots.before" #before="{ item }">
-                  <slot name="before" :item="item"></slot>
+                <template v-if="!slots.default && slots.icon" #icon="{ item }">
+                  <slot name="icon" :item="item"></slot>
                 </template>
                 <template v-if="!slots.default && slots.label" #label="{ item }">
                   <slot name="label" :item="item"></slot>
                 </template>
-                <template v-if="!slots.default && slots.after" #after="{ item }">
-                  <slot name="after" :item="item"></slot>
+                <template v-if="!slots.default && slots.suffix" #suffix="{ item }">
+                  <slot name="suffix" :item="item"></slot>
                 </template>
               </MenusItem>
             </template>
@@ -52,9 +52,6 @@ export default defineComponent({
     MenusItem
   },
   props: {
-    iconName: {
-      type: String
-    },
     menus: {
       type: Array,
       default: []
@@ -62,6 +59,10 @@ export default defineComponent({
     menusStyle: {
       type: Object,
       default: {}
+    },
+    menusItemClass: {
+      type: String,
+      default: null
     },
     event: {
       type: Object,
@@ -81,7 +82,7 @@ export default defineComponent({
     },
     zIndex: {
       type: [Number, String],
-      default: 2
+      default: 3
     },
     direction: {
       type: String,
@@ -116,7 +117,7 @@ export default defineComponent({
       _direction.value = 'left';
       if (style.value.left < 0) {
         _direction.value = 'right';
-        if (_position.value.width === 0) {
+        if (_position.value.width === 0 || _position.value.width === undefined) {
           style.value.left = 0;
         } else {
           style.value.left = _position.valuen.x + _position.value.width;
@@ -129,7 +130,7 @@ export default defineComponent({
       _direction.value = 'right';
       if (style.value.left + menusWidth > windowWidth) {
         _direction.value = 'left';
-        if (_position.value.width === 0) {
+        if (_position.value.width === 0 || _position.value.width === undefined) {
           style.value.left = windowWidth - menusWidth;
         } else {
           style.value.left = _position.value.x - menusWidth;
@@ -141,6 +142,9 @@ export default defineComponent({
       open.value = true;
       props.menus.forEach(menu => {
         hasIcon.value = hasIcon.value || menu.icon !== undefined;
+        if (hasIcon.value) {
+          return;
+        }
       });
       nextTick(() => {
         const menusWidth = menusRef.value.offsetWidth;
@@ -152,7 +156,7 @@ export default defineComponent({
         }
         style.value.top = _position.value.y;
         if (_position.value.y + menusHeight > windowHeight) {
-          if (_position.value.height === 0) {
+          if (_position.value.height === 0 || _position.value.height === undefined) {
             style.value.top = _position.value.y - menusHeight;
           } else {
             style.value.top = windowHeight - menusHeight;
@@ -162,6 +166,9 @@ export default defineComponent({
     })
 
     function menusEnter(event, item, index) {
+      if (item.disabled) {
+        return;
+      }
       activeIndex.value = index;
       if (ctx.instance) {
         if (ctx.index === index) {
@@ -176,7 +183,7 @@ export default defineComponent({
       }
       const menuItemClientRect = event.target.getBoundingClientRect();
       const node = h(Menus, {
-        iconName: props.iconName,
+        menusItemClass: item.menusItemClass,
         menus: item.children || [],
         direction: _direction.value,
         position: {
@@ -238,7 +245,7 @@ export default defineComponent({
 
 .menus-fade-enter-active,
 .menus-fade-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity 0.1s ease-in-out;
 }
 .menus-fade-enter-from,
 .menus-fade-leave-to {

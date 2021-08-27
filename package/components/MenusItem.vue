@@ -1,80 +1,48 @@
 <template>
-  <div v-if="item.disabled" @click.stop>
-    <template v-if="slots.default">
-      <slot :item="item"></slot>
-    </template>
-    <template v-else>
-      <div class="menus-item menus-item-disabled" :class="item.divided ? 'menus-divided' : null">
-        <div v-if="hasIcon" class="menus-item-icon">
-          <slot v-if="slots.before" name="before" :item="{ activeIndex, item }"></slot>
-          <template v-else-if="item.icon">
-            <MenusIcon :iconName="iconName" :options="item.icon"></MenusIcon>
-          </template>
-        </div>
-        <span class="menus-item-label">
-          <slot v-if="slots.label" name="label" :item="{ activeIndex, item }"></slot>
-          <template v-else>{{ item.label }}</template>
-        </span>
+  <template v-if="slots.default">
+    <div
+      class="menus-item"
+      @mouseenter="($event) => menusEnter($event, item)"
+      @click="($event) => menusClick($event, item)"
+      @contextmenu="($event) => menusClick($event, item)"
+    >
+      <slot :item="{ activeIndex, item }"></slot>
+    </div>
+  </template>
+  <template v-else>
+    <div
+      @mouseenter="($event) => menusEnter($event, item)"
+      @click="($event) => menusClick($event, item)"
+      @contextmenu="($event) => menusClick($event, item)"
+      :class="['menus-item', item.disabled ? 'menus-item-disabled' : 'menus-item-available',
+      item.divided ? 'menus-divided' : null, activeIndex === index ? 'menus-item-active' : null,
+      menusItemClass]"
+    >
+      <div v-if="hasIcon" class="menus-item-icon">
+        <slot v-if="slots.icon" name="icon" :item="{ activeIndex, item }"></slot>
+        <template v-else-if="item.icon">
+          <span v-if="typeof item.icon === 'string'" v-html="item.icon"></span>
+          <MenusIcon v-else :options="item.icon"></MenusIcon>
+        </template>
       </div>
-    </template>
-  </div>
-  <div @mouseenter="($event) => menusEnter($event, item)" @click.stop v-else-if="item.children">
-    <template v-if="slots.default">
-      <slot :item="item"></slot>
-    </template>
-    <template v-else>
-      <div
-        class="menus-item menus-item-available"
-        :class="[item.divided ? 'menus-item-divided' : null, activeIndex === index ? 'menus-item-expand' : null,]"
-      >
-        <div v-if="hasIcon" class="menus-item-icon">
-          <slot v-if="slots.before" name="before" :item="{ activeIndex, item }"></slot>
-          <template v-else-if="item.icon">
-            <MenusIcon :iconName="iconName" :options="item.icon"></MenusIcon>
-          </template>
-        </div>
-        <span class="menus-item-label">
-          <slot v-if="slots.label" name="label" :item="{ activeIndex, item }"></slot>
-          <template v-else>{{ item.label }}</template>
-        </span>
-        <div class="menus-item-expand-icon">
-          <slot v-if="slots.after" name="after" :item="{ activeIndex, item }"></slot>
-          <template v-else>▶</template>
-        </div>
+      <span class="menus-item-label">
+        <slot v-if="slots.label" name="label" :item="{ activeIndex, item }"></slot>
+        <template v-else>{{ item.label }}</template>
+      </span>
+      <div class="menus-item-suffix">
+        <slot v-if="item.children && slots.suffix" name="suffix" :item="{ activeIndex, item }"></slot>
+        <template v-else-if="item.children">▶</template>
+        <slot v-else-if="item.tip && slots.suffix" name="suffix" :item="{ activeIndex, item }"></slot>
+        <span v-else-if="item.tip" class="menus-item-tip">{{ item.tip }}</span>
       </div>
-    </template>
-  </div>
-  <div @mouseenter="($event) => menusEnter($event, item)" @click="menusClick(item)" v-else>
-    <template v-if="slots.default">
-      <slot :item="item"></slot>
-    </template>
-    <template v-else>
-      <div
-        class="menus-item menus-item-available"
-        :class="item.divided ? 'menus-item-divided' : null"
-      >
-        <div v-if="hasIcon" class="menus-item-icon">
-          <slot v-if="slots.before" name="before" :item="{ activeIndex, item }"></slot>
-          <template v-else-if="item.icon">
-            <MenusIcon :iconName="iconName" :options="item.icon"></MenusIcon>
-          </template>
-        </div>
-        <span class="menus-item-label">
-          <slot v-if="slots.label" name="label" :item="{ activeIndex, item }"></slot>
-          <template v-else>{{ item.label }}</template>
-        </span>
-        <div class="menus-item-expand-icon">
-          <slot v-if="slots.after" name="after" :item="{ activeIndex, item }"></slot>
-        </div>
-      </div>
-    </template>
-  </div>
+    </div>
+  </template>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 
-import MenusIcon from './MenusIcon.vue'
+import MenusIcon from './MenusIcon.vue';
 
 export default defineComponent({
   name: "menus-item",
@@ -82,12 +50,13 @@ export default defineComponent({
     MenusIcon
   },
   props: {
+    menusItemClass: {
+      type: String,
+      default: null
+    },
     hasIcon: {
       type: Boolean,
       default: false
-    },
-    iconName: {
-      type: String
     },
     item: {
       type: Object,
@@ -107,14 +76,22 @@ export default defineComponent({
       emit("menusEnter", event, item, props.index)
       event.preventDefault();
     }
-    function menusClick(item) {
+    function menusClick(event, item) {
+      event.preventDefault();
+      if (item.disabled) {
+        event.stopPropagation();
+        return;
+      }
       if (
         item &&
         !item.disabled &&
         !item.hidden &&
         typeof item.click === "function"
       ) {
-        return item.click(item);
+        const val = item.click(item);
+        if (val === false || val === null) {
+          event.stopPropagation();
+        }
       }
     }
     return {
@@ -128,16 +105,16 @@ export default defineComponent({
 
 <style>
 .menus-item {
-  box-sizing: border-box;
-  list-style: none;
+  display: flex;
   line-height: 2rem;
   padding: 0 1rem;
   margin: 0;
   font-size: 0.8rem;
   outline: 0;
-  display: flex;
   align-items: center;
   transition: 0.2s;
+  box-sizing: border-box;
+  list-style: none;
   border-bottom: 1px solid #00000000;
 }
 
@@ -146,18 +123,18 @@ export default defineComponent({
 }
 
 .menus-item .menus-item-icon {
-  margin-right: 0.5rem;
-  width: 0.9rem;
+  display: flex;
+  margin-right: 0.6rem;
+  width: 1rem;
 }
 
 .menus-item .menus-item-label {
   flex: 1;
 }
 
-.menus-item .menus-item-expand-icon {
-  margin-left: 1rem;
-  font-size: 0.4rem;
-  width: 0.6rem;
+.menus-item .menus-item-suffix {
+  margin-left: 1.5rem;
+  font-size: 0.39rem;
 }
 
 .menus-item-available {
@@ -175,8 +152,13 @@ export default defineComponent({
   cursor: not-allowed;
 }
 
-.menus-item-expand {
+.menus-item-active {
   background: #ecf5ff;
   color: #409eff;
+}
+
+.menus-item-tip {
+  font-size: 9px;
+  color: #999;
 }
 </style>

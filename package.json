@@ -12,14 +12,14 @@
     "vue-contextmenu",
     "vue3-contextmenu"
   ],
-  "main": "lib/vue3-menus.umd.min.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/vue3-menus.umd.min.js",
+  "types": "dist/index.d.ts",
   "files": [
     "package.json",
     "README.md",
     ".gitignore",
     "LICENSE",
-    "lib"
+    "dist"
   ],
   "license": "MIT",
   "repository": {
@@ -32,8 +32,11 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
+    "@element-plus/icons": "^0.0.11",
     "@vue/cli-service": "^4.5.13",
     "@vue/compiler-sfc": "3.0.0",
-    "vue": "3.0.0"
+    "vue": "3.0.0",
+    "vue3-menus": "^1.0.0"
   }
 }

@@ -1,2 +1,225 @@
 # vue3-menus
 Vue3.0 自定义右键菜单
+
+Vue3.0 原生实现完全自定义右键菜单组件, 零依赖，可根据可视区域自动调节显示位置，可支持插槽完全重写每一项菜单
+
+![演示](./public/info.png)
+
+
+# 在线演示
+- [完整菜单功能演示](https://codepen.io/xfy520/pen/yLXNqzy)
+- [复制粘贴演示](https://codepen.io/xfy520/pen/xxrGJdg)
+
+# 快速安装
+
+## npm 安装
+```
+npm install vue3-menus
+```
+或
+```
+yarn add vue3-menus
+```
+
+## CDN
+```html
+<script src="https://unpkg.com/vue3-menus/dist/vue3-menus.umd.min.js">
+```
+
+# 使用
+CDN引入则不需要 `app.use(Vue3Menus)`
+> 样例中使用的是`@ant-design/icons-vue`图标与`@element-plus/icons`图标、图标可以使用`html`代码传入、也可以通过插槽`自定义图标`、也可以`完全重写每一项菜单`
+
+```js
+import { createApp } from 'vue';
+import Menus from 'vue3-menus';
+import App from './App.vue';
+const app = createApp(App);
+app.use(Menus);
+app.mount('#app');
+```
+
+```html
+<template>
+  <div style="height: 98vh; width: 100%;" v-menus:left="menus">
+    <div class="div" v-menus:left="menus">指令方式打开菜单</div>
+    <div class="div" @click.stop @contextmenu="($event) => $menusEvent($event, menus)">事件方式打开菜单</div>
+    <div class="div" @click.stop @contextmenu="rightClick">组件方式打开菜单</div>
+    <vue3-menus v-model:open="isOpen" :event="eventVal" :menus="menus.menus" hasIcon>
+      <template #icon="{item: {activeIndex}}">{{activeIndex}}</template>
+      <template #label="{ item: { item } }">插槽：{{ item.label }}</template>
+    </vue3-menus>
+  </div>
+</template>
+<script>
+import { defineComponent, nextTick, ref, shallowRef } from "vue";
+import { SyncOutlined, WindowsOutlined, QrcodeOutlined } from '@ant-design/icons-vue';
+import { Printer } from '@element-plus/icons'
+
+export default defineComponent({
+  name: "App",
+  setup() {
+    const isOpen = ref(false);
+    const eventVal = ref({});
+    function rightClick(event) {
+      isOpen.value = false;
+      nextTick(() => {
+        eventVal.value = event;
+        isOpen.value = true;
+      })
+      event.preventDefault();
+    }
+    const menus = shallowRef({
+      menus: [
+        {
+          label: "返回(B)",
+          tip: 'Alt+向左箭头',
+          click: () => {
+            window.history.back(-1);
+          }
+        },
+        {
+          label: "点击不关闭菜单",
+          tip: '不关闭菜单',
+          click: () => {
+            return false;
+          }
+        },
+        {
+          label: "前进(F)",
+          tip: 'Alt+向右箭头',
+          disabled: true
+        },
+        {
+          label: "重新加载(R)",
+          tip: 'Ctrl+R',
+          icon: {
+            node: SyncOutlined,
+            option: {
+              spin: true
+            }
+          },
+          click: () => location.reload(),
+          divided: true
+        },
+        {
+          label: "另存为(A)...",
+          tip: 'Ctrl+S'
+        },
+        {
+          label: "打印(P)...",
+          tip: 'Ctrl+P',
+          icon: {
+            node: Printer,
+            option: {
+              color: 'red'
+            }
+          },
+          click: () => window.print(),
+        },
+        {
+          label: "投射(C)...",
+          divided: true
+        },
+        {
+          label: '发送到你的设备',
+          icon: WindowsOutlined,
+          children: [
+            {
+              label: 'iPhone',
+            },
+            {
+              label: 'iPad'
+            },
+            {
+              label: 'Windows 11'
+            }
+          ]
+        },
+        {
+          label: "为此页面创建二维码",
+          divided: true,
+          icon: {
+            node: QrcodeOutlined,
+            option: {
+              style: {
+                color: 'aqua'
+              }
+            }
+          }
+        },
+        {
+          label: "使用网页翻译(F)",
+          divided: true,
+          children: [
+            { label: "翻译成繁体中文" },
+            { label: "翻译成繁体中文" },
+            {
+              label: "百度翻译", children: [
+                { label: "翻译成繁体中文" },
+                { label: "翻译成繁体中文" },]
+            },
+            {
+              label: "搜狗翻译", children: [
+                { label: "翻译成繁体中文" },
+                { label: "翻译成繁体中文" },
+              ]
+            },
+            {
+              label: "有道翻译", children: [
+                { label: "翻译成繁体中文" },
+                { label: "翻译成繁体中文" },
+              ]
+            },
+          ]
+        },
+        {
+          label: "截取网页(R)"
+        },
+        { label: "查看网页源代码(U)", tip: 'Ctrl+U' },
+        { label: "检查(N)", tip: 'Ctrl+Shift+I' }
+      ]
+    })
+    return { menus, isOpen, rightClick, eventVal }
+  },
+});
+</script>
+```
+
+```css
+.div {
+  display: inline-block;
+  background-color: aqua;
+  margin: 0 20px;
+  line-height: 200px;
+  padding: 0 20px;
+  height: 200px;
+}
+```
+
+# 参数说明
+
+## MenuOptions
+
+|      属性      |         描述          |           类型           |             是否必填             | 默认值  |
+| :------------: | :-------------------: | :----------------------: | :------------------------------: | :-----: |
+|     menus      |     菜单列表信息      |   `MenusItemOptions[]`   |              `true`              |   []    |
+|   menusStyle   |    菜单容器的样式     |         `object`         |             `false`              |   {}    |
+| menusItemClass | 菜单每一项的`class`名 |         `string`         |             `false`              | `null`  |
+|     event      |     鼠标事件信息      |         `Event`          |       与`position`必填一项       |   {}    |
+|    position    | 手动传入菜单显示位置  | `{x: number, y: number}` |        与`event`必填一项         |   {}    |
+|    minWidth    |   菜单容器最小宽度    |  `number`  \| `number`   |             `false`              |  `150`  |
+|    maxWidth    |   菜单容器最打宽度    |  `number`  \| `number`   |             `false`              | `none`  |
+|     zIndex     |       菜单层级        |  `number`  \| `number`   |             `false`              |   `3`   |
+|      open      |   控制菜单组件显示    |        `boolean`         | 只有当通过组件方式使用菜单时必填 | `false` |
+
+## MenusItemOptions
+
+|   属性   |                                          描述                                          |         类型         | 是否必填 |   默认值    |
+| :------: | :------------------------------------------------------------------------------------: | :------------------: | :------: | :---------: |
+|  label   |                                       菜单项名称                                       |       `string`       |  `true`  |      —      |
+|   icon   | `string`: 传入图标html代码、`object`: 传入组件或者`{node: 组件, option: 组件配置参数}` | `string` \| `object` | `false`  | `undefined` |
+| disabled |                                     是否禁用菜单项                                     |      `boolean`       | `false`  | `undefined` |
+| divided  |                                     是否显示分割线                                     |      `boolean`       | `false`  | `undefined` |
+|  click   |                     菜单项点击事件，返回`null`或`false`不关闭菜单                      |     `Function()`     | `false`  | `undefined` |
+| children |                                     子菜单列表信息                                     | `MenusItemOptions[]` | `false`  | `undefined` |

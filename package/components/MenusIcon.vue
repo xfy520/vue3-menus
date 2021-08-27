@@ -1,25 +1,23 @@
 
 
 <script>
-import { h, defineComponent, resolveComponent } from "vue";
+import { h, defineComponent } from "vue";
 
 export default defineComponent({
   name: "Vue3Menus",
   props: {
-    iconName: {
-      type: String,
-    },
     options: {
-      type: [Object, String],
+      type: [Function, Object],
       default: {}
     }
   },
   render() {
-    if (this.$props.iconName) {
-      const component = resolveComponent(this.$props.iconName);
-      if (typeof component === 'object') {
-        return h(component, typeof this.$props.options === 'object' ? { ...this.$props.options } : this.$props.options)
-      }
+    if (typeof this.$props.options === 'function') {
+      return h(this.$props.options);
+    } else if (typeof this.$props.options.node == 'function' || typeof this.$props.options.node == 'object') {
+      return h(this.$props.options.node, this.$props.options.option);
+    } else if (typeof this.$props.options === 'object' && !this.$props.options.node) {
+      return h(this.$props.options);
     }
     return null;
   }

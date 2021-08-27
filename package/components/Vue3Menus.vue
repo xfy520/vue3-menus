@@ -7,9 +7,6 @@ import Menus from './Menus.vue';
 export default defineComponent({
   name: "Vue3Menus",
   props: {
-    iconName: {
-      type: String
-    },
     menus: {
       type: Array,
       default: []
@@ -17,6 +14,10 @@ export default defineComponent({
     menusStyle: {
       type: Object,
       default: {}
+    },
+    menusItemClass: {
+      type: String,
+      default: null
     },
     event: {
       type: Object,
@@ -60,7 +61,7 @@ export default defineComponent({
           lastInstance = null;
         }
         const node = h(Menus, {
-          iconName: props.iconName,
+          menusItemClass: props.menusItemClass,
           menus: props.menus,
           menusStyle: props.menusStyle,
           event: props.event,
@@ -72,9 +73,15 @@ export default defineComponent({
         const app = createApp(node);
         lastInstance = app.mount(document.createElement("div"));
         lastInstance.$unmount = app.unmount;
-        document.addEventListener("click", mouseEvent);
+        setTimeout(() => {
+          document.addEventListener("click", mouseEvent);
+          document.addEventListener("contextmenu", mouseEvent);
+          document.addEventListener("wheel", mouseEvent);
+        }, 0);
       } else {
-        document.removeEventListener("click", mouseEvent)
+        document.removeEventListener("click", mouseEvent);
+        document.removeEventListener("contextmenu", mouseEvent);
+        document.removeEventListener("wheel", mouseEvent);
       }
     })
     return {}

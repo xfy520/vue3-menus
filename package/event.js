@@ -9,20 +9,21 @@ function mouseEvent() {
     lastInstance = null;
   }
   document.removeEventListener("click", mouseEvent);
+  document.removeEventListener("contextmenu", mouseEvent);
   document.removeEventListener("wheel", mouseEvent);
 }
 
-function menusEvent(value, event) {
-  const temp = value || {};
+function $menusEvent(menus, event) {
+  const temp = menus || {};
   if (lastInstance) {
     lastInstance.close();
     lastInstance = null;
     document.removeEventListener("click", mouseEvent);
+    document.removeEventListener("contextmenu", mouseEvent);
     document.removeEventListener("wheel", mouseEvent);
   }
 
   let instance = createApp(Menus, {
-    iconName: temp.iconName,
     menus: temp.menus || [],
     menusStyle: temp.menusStyle || {},
     event,
@@ -32,11 +33,15 @@ function menusEvent(value, event) {
   });
   lastInstance = instance.mount(document.createElement("div"));
   lastInstance.$unmount = instance.unmount;
-  event.preventDefault();
+  if (temp.prevent == undefined || temp.prevent) {
+    event.preventDefault();
+  }
   setTimeout(() => {
     document.addEventListener("click", mouseEvent);
+    document.addEventListener("contextmenu", mouseEvent);
     document.addEventListener("wheel", mouseEvent);
   }, 0);
+  return lastInstance;
 }
 
-export default menusEvent;
+export default $menusEvent;

@@ -2,13 +2,9 @@ module.exports = {
   lintOnSave: false,
   runtimeCompiler: true,
   publicPath: './',
-  outputDir: 'lib',
+  outputDir: 'dist',
   css: {
-    extract: true,
-    sourceMap: false,
-    loaderOptions: {
-      less: {
-      }
-    }
+    extract: false,
+    sourceMap: false
   }
 }
