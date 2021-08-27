@@ -206,11 +206,11 @@ export default defineComponent({
 |     menus      |     菜单列表信息      |   `MenusItemOptions[]`   |              `true`              |   []    |
 |   menusStyle   |    菜单容器的样式     |         `object`         |             `false`              |   {}    |
 | menusItemClass | 菜单每一项的`class`名 |         `string`         |             `false`              | `null`  |
-|     event      |     鼠标事件信息      |         `Event`          |       与`position`必填一项       |   {}    |
-|    position    | 手动传入菜单显示位置  | `{x: number, y: number}` |        与`event`必填一项         |   {}    |
-|    minWidth    |   菜单容器最小宽度    |  `number`  \| `number`   |             `false`              |  `150`  |
-|    maxWidth    |   菜单容器最打宽度    |  `number`  \| `number`   |             `false`              | `none`  |
-|     zIndex     |       菜单层级        |  `number`  \| `number`   |             `false`              |   `3`   |
+|     event      |     鼠标事件信息(指令使用时可以不传)      |         `Event`          |       与`position`必填一项       |   {}    |
+|    position    | 手动传入菜单显示位置(指令使用时可以不传)  | `{x: number, y: number}` |        与`event`必填一项         |   {}    |
+|    minWidth    |   菜单容器最小宽度    |  `number`  \| `string`   |             `false`              |  `150`  |
+|    maxWidth    |   菜单容器最打宽度    |  `number`  \| `string`   |             `false`              | `none`  |
+|     zIndex     |       菜单层级        |  `number`  \| `string`   |             `false`              |   `3`   |
 |      open      |   控制菜单组件显示    |        `boolean`         | 只有当通过组件方式使用菜单时必填 | `false` |
 
 ## MenusItemOptions
@@ -221,5 +221,6 @@ export default defineComponent({
 |   icon   | `string`: 传入图标html代码、`object`: 传入组件或者`{node: 组件, option: 组件配置参数}` | `string` \| `object` | `false`  | `undefined` |
 | disabled |                                     是否禁用菜单项                                     |      `boolean`       | `false`  | `undefined` |
 | divided  |                                     是否显示分割线                                     |      `boolean`       | `false`  | `undefined` |
+| tip  |                                     没项菜单后面的小提示                                     |      `string`       | `false`  | `''` |
 |  click   |                     菜单项点击事件，返回`null`或`false`不关闭菜单                      |     `Function()`     | `false`  | `undefined` |
 | children |                                     子菜单列表信息                                     | `MenusItemOptions[]` | `false`  | `undefined` |
