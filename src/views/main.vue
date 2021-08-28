@@ -33,7 +33,7 @@ import { defineComponent, nextTick, ref, shallowRef } from "vue";
 import menus from './../utils/menus'
 
 export default defineComponent({
-  name: "App",
+  name: "home",
   setup() {
     const isOpen1 = ref(false);
     const isOpen2 = ref(false);
