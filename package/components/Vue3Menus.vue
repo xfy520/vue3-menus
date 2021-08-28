@@ -1,7 +1,7 @@
 
 
 <script>
-import { watch, h, defineComponent, createApp, nextTick } from "vue";
+import { watch, h, defineComponent, createApp } from "vue";
 import Menus from './Menus.vue';
 
 export default defineComponent({

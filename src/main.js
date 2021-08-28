@@ -1,10 +1,27 @@
 import { createApp } from 'vue';
 
-import Menus from 'vue3-menus';
+import Menus from './../dist/vue3-menus.umd';
 import App from './App.vue';
 
 
-const app = createApp(App);
-app.use(Menus);
+import { createRouter, createWebHashHistory } from 'vue-router';
+const routes = [
+  {
+    path: '/',
+    component: () => import('./views/main.vue'),
+  },
+  {
+    path: '/copy',
+    component: () => import('./views/copy.vue'),
+  },
+];
 
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+});
+
+const app = createApp(App);
+app.use(router);
+app.use(Menus);
 app.mount(document.body);

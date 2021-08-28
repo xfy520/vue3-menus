@@ -1,7 +1,6 @@
 <template>
   <template v-if="slots.default">
     <div
-      class="menus-item"
       @mouseenter="($event) => menusEnter($event, item)"
       @click="($event) => menusClick($event, item)"
       @contextmenu="($event) => menusClick($event, item)"
@@ -14,6 +13,7 @@
       @mouseenter="($event) => menusEnter($event, item)"
       @click="($event) => menusClick($event, item)"
       @contextmenu="($event) => menusClick($event, item)"
+      :style="item.style ? item.style : {}"
       :class="['menus-item', item.disabled ? 'menus-item-disabled' : 'menus-item-available',
       item.divided ? 'menus-divided' : null, activeIndex === index ? 'menus-item-active' : null,
       menusItemClass]"
@@ -130,11 +130,17 @@ export default defineComponent({
 
 .menus-item .menus-item-label {
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .menus-item .menus-item-suffix {
   margin-left: 1.5rem;
   font-size: 0.39rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .menus-item-available {

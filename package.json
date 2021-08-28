@@ -28,7 +28,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name vue3-menus ./package/index.js"
+    "build": "vue-cli-service build --name vue3-menus --entry ./package/index.js --target lib"
   },
   "dependencies": {},
   "devDependencies": {
@@ -36,6 +36,7 @@
     "@element-plus/icons": "^0.0.11",
     "@vue/cli-service": "^4.5.13",
     "@vue/compiler-sfc": "3.0.0",
-    "vue": "3.0.0"
+    "vue": "3.0.0",
+    "vue-router": "^4.0.11"
   }
 }

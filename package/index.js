@@ -7,16 +7,22 @@ Vue3Menus.install = (app, options = {}) => {
 
 const directive = {
   mounted(el, { value, arg, instance }) {
-    if (arg == undefined || arg == 'right') {
+    if (arg === undefined || arg === 'right') {
       el.addEventListener("contextmenu", $menusEvent.bind(instance, value));
-    } else if (arg == 'left') {
+    } else if (arg === 'left') {
+      el.addEventListener("click", $menusEvent.bind(instance, value));
+    } else if (arg === 'all') {
+      el.addEventListener("contextmenu", $menusEvent.bind(instance, value));
       el.addEventListener("click", $menusEvent.bind(instance, value));
     }
   },
   unmounted(el, { arg }) {
-    if (arg == undefined || arg == 'right') {
+    if (arg === undefined || arg === 'right') {
       el.removeEventListener("contextmenu", $menusEvent);
-    } else if (arg == 'left') {
+    } else if (arg === 'left') {
+      el.removeEventListener("click", $menusEvent);
+    } else if (arg === 'all') {
+      el.removeEventListener("contextmenu", $menusEvent);
       el.removeEventListener("click", $menusEvent);
     }
   }

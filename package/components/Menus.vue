@@ -74,7 +74,7 @@ export default defineComponent({
     },
     minWidth: {
       type: [Number, String],
-      default: 150
+      default: 'none'
     },
     maxWidth: {
       type: [Number, String],
@@ -166,10 +166,10 @@ export default defineComponent({
     })
 
     function menusEnter(event, item, index) {
+      activeIndex.value = index;
       if (item.disabled) {
         return;
       }
-      activeIndex.value = index;
       if (ctx.instance) {
         if (ctx.index === index) {
           return;
@@ -183,7 +183,7 @@ export default defineComponent({
       }
       const menuItemClientRect = event.target.getBoundingClientRect();
       const node = h(Menus, {
-        menusItemClass: item.menusItemClass,
+        menusItemClass: props.menusItemClass,
         menus: item.children || [],
         direction: _direction.value,
         position: {
