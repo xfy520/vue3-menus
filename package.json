@@ -1,6 +1,6 @@
 {
   "name": "vue3-menus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "xufangyi",
   "private": false,
   "description": "Vue3.0 左右键菜单",
@@ -19,8 +19,13 @@
     "README.md",
     ".gitignore",
     "LICENSE",
-    "inedx.d.ts",
-    "dist/.*"
+    "index.d.ts",
+    "dist/vue3-menus.common.js",
+    "dist/vue3-menus.common.js.map",
+    "dist/vue3-menus.umd.js",
+    "dist/vue3-menus.umd.js.map",
+    "dist/vue3-menus.umd.min.js",
+    "dist/vue3-menus.umd.min.js.map"
   ],
   "license": "MIT",
   "repository": {
