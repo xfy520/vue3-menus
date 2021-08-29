@@ -15,7 +15,7 @@
       @contextmenu="($event) => menusClick($event, item)"
       :style="item.style ? item.style : {}"
       :class="['menus-item', item.disabled ? 'menus-item-disabled' : 'menus-item-available',
-      item.divided ? 'menus-divided' : null, activeIndex === index ? 'menus-item-active' : null,
+      item.divided ? 'menus-divided' : null, (!item.disabled && activeIndex === index) ? 'menus-item-active' : null,
       menusItemClass]"
     >
       <div v-if="hasIcon" class="menus-item-icon">

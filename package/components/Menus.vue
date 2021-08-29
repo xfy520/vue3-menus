@@ -87,6 +87,10 @@ export default defineComponent({
     direction: {
       type: String,
       default: 'right'
+    },
+    open: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { slots }) {
@@ -183,7 +187,7 @@ export default defineComponent({
       }
       const menuItemClientRect = event.target.getBoundingClientRect();
       const node = h(Menus, {
-        menusItemClass: props.menusItemClass,
+        ...props,
         menus: item.children || [],
         direction: _direction.value,
         position: {
@@ -192,10 +196,6 @@ export default defineComponent({
           width: menuItemClientRect.width - 2 * 3,
           height: menuItemClientRect.width
         },
-        menusStyle: props.menusStyle,
-        minWidth: props.minWidth,
-        maxWidth: props.maxWidth,
-        zIndex: props.zIndex,
       }, slots);
       const app = createApp(node);
       ctx.instance = app.mount(document.createElement("div"));

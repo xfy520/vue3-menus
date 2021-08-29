@@ -23,14 +23,8 @@ function $menusEvent(menus, event) {
     document.removeEventListener("wheel", mouseEvent);
   }
   let instance = createApp(Menus, {
-    menus: temp.menus || [],
-    menusStyle: temp.menusStyle || {},
-    menusItemClass: temp.menusItemClass,
     event,
-    position: temp.position,
-    minWidth: temp.minWidth,
-    maxWidth: temp.maxWidth,
-    zIndex: temp.zIndex || 2
+    ...temp
   });
   lastInstance = instance.mount(document.createElement("div"));
   lastInstance.$unmount = instance.unmount;

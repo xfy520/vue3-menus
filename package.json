@@ -1,6 +1,6 @@
 {
   "name": "vue3-menus",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "xufangyi",
   "private": false,
   "description": "Vue3.0 左右键菜单",
@@ -20,7 +20,7 @@
     ".gitignore",
     "LICENSE",
     "inedx.d.ts",
-    "dist"
+    "dist/.*"
   ],
   "license": "MIT",
   "repository": {

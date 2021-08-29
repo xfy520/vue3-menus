@@ -61,14 +61,7 @@ export default defineComponent({
           lastInstance = null;
         }
         const node = h(Menus, {
-          menusItemClass: props.menusItemClass,
-          menus: props.menus,
-          menusStyle: props.menusStyle,
-          event: props.event,
-          position: props.position,
-          minWidth: props.minWidth,
-          maxWidth: props.maxWidth,
-          zIndex: props.zIndex,
+          ...props
         }, slots);
         const app = createApp(node);
         lastInstance = app.mount(document.createElement("div"));

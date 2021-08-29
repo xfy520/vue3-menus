@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 
-import Menus from './../dist/vue3-menus.umd';
+import Menus from './../package/index';
 import App from './App.vue';
 
 
