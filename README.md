@@ -413,7 +413,7 @@ export default {
 
 |  属性   |       描述       |   类型    | 是否必填 | 默认值  |                    插槽传入值                     |
 | :-----: | :--------------: | :-------: | :------: | :-----: | :-----------------------------------------------: |
-|  open   | 控制菜单组件显示 | `boolean` |  `true`  | `false` |                      `false`                      |
+|  open   | 控制菜单组件显示: `v-model:open` | `boolean` |  `true`  | `false` |                      `false`                      |
 | default |     默认插槽     |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 |  icon   |     图标插槽     |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 |  label  |   菜单标题插槽   |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
