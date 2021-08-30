@@ -413,6 +413,14 @@ export default {
 
 |  属性   |       描述       |   类型    | 是否必填 | 默认值  |                    插槽传入值                     |
 | :-----: | :--------------: | :-------: | :------: | :-----: | :-----------------------------------------------: |
+|     menus      |               菜单列表信息               |   `MenusItemOptions[]`   |        `true`        |   []   |
+|   menusStyle   |              菜单容器的样式              |         `object`         |       `false`        |   {}   |
+| menusItemClass |          菜单每一项的`class`名           |         `string`         |       `false`        | `null` |
+|     event      |     鼠标事件信息(指令使用时可以不传)     |         `Event`          | 与`position`必填一项 |   {}   |
+|    position    | 手动传入菜单显示位置(指令使用时可以不传) | `{x: number, y: number}` |  与`event`必填一项   |   {}   |
+|    minWidth    |             菜单容器最小宽度             |  `number`  \| `string`   |       `false`        | `none` |
+|    maxWidth    |             菜单容器最打宽度             |  `number`  \| `string`   |       `false`        | `none` |
+|     zIndex     |                 菜单层级                 |  `number`  \| `string`   |       `false`        |  `3`   |
 |  open   | 控制菜单组件显示: `v-model:open` | `boolean` |  `true`  | `false` |                      `false`                      |
 | default |     默认插槽     |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 |  icon   |     图标插槽     |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
