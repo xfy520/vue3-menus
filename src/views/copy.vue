@@ -63,7 +63,7 @@ import {
   defineComponent, ref, shallowRef
 } from 'vue';
 
-import { menusEvent } from './../../package/index';
+import { menusEvent } from './../../lib/index';
 
 export default defineComponent({
   name: 'copy',

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 
-import Menus from './../package/index';
+import Menus from './../lib/index';
 import App from './App.vue';
 
 

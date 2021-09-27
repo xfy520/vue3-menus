@@ -1,6 +1,6 @@
 {
   "name": "vue3-menus",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "xufangyi",
   "private": false,
   "description": "Vue3.0 左右键菜单",
@@ -19,6 +19,7 @@
     "README.md",
     ".gitignore",
     "LICENSE",
+    "lib",
     "index.d.ts",
     "dist/vue3-menus.common.js",
     "dist/vue3-menus.common.js.map",
@@ -34,7 +35,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --name vue3-menus --entry ./package/index.js --target lib"
+    "build": "vue-cli-service build --name vue3-menus --entry ./lib/index.js --target lib"
   },
   "dependencies": {},
   "devDependencies": {
