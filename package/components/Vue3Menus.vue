@@ -64,17 +64,17 @@ export default defineComponent({
           ...props
         }, slots);
         const app = createApp(node);
-        lastInstance = app.mount(document.createElement("div"));
+        lastInstance = app.mount(globalThis.document.createElement("div"));
         lastInstance.$unmount = app.unmount;
         setTimeout(() => {
-          document.addEventListener("click", mouseEvent);
-          document.addEventListener("contextmenu", mouseEvent);
-          document.addEventListener("wheel", mouseEvent);
+          globalThis.document.addEventListener("click", mouseEvent);
+          globalThis.document.addEventListener("contextmenu", mouseEvent);
+          globalThis.document.addEventListener("wheel", mouseEvent);
         }, 0);
       } else {
-        document.removeEventListener("click", mouseEvent);
-        document.removeEventListener("contextmenu", mouseEvent);
-        document.removeEventListener("wheel", mouseEvent);
+        globalThis.document.removeEventListener("click", mouseEvent);
+        globalThis.document.removeEventListener("contextmenu", mouseEvent);
+        globalThis.document.removeEventListener("wheel", mouseEvent);
       }
     })
     return {}

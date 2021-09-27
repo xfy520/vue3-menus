@@ -95,8 +95,8 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const ctx = {};
-    const windowWidth = document.documentElement.clientWidth;
-    const windowHeight = document.documentElement.clientHeight;
+    const windowWidth = globalThis.document.documentElement.clientWidth;
+    const windowHeight = globalThis.document.documentElement.clientHeight;
     const _position = props.position.x && props.position.y ? ref(props.position) : ref({
       x: props.event.clientX,
       y: props.event.clientY,
@@ -198,7 +198,7 @@ export default defineComponent({
         },
       }, slots);
       const app = createApp(node);
-      ctx.instance = app.mount(document.createElement("div"));
+      ctx.instance = app.mount(globalThis.document.createElement("div"));
       ctx.instance.$unmount = app.unmount;
       ctx.index = index;
       event.preventDefault();
