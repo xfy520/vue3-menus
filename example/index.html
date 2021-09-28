@@ -489,8 +489,11 @@
         }
       }
     };
-    Vue.createApp(vue3Composition).use(Vue3Menus).mount("#app");
-
+    const app = Vue.createApp(vue3Composition);
+    app.component('vue3-menus', Vue3Menus.Vue3Menus);
+    app.config.globalProperties.$menusEvent = Vue3Menus.menusEvent;
+    app.directive('menus', Vue3Menus.directive);
+    app.mount("#app");
   </script>
 </body>
 

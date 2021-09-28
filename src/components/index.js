@@ -1,10 +1,6 @@
 import Vue3Menus from './Vue3Menus.vue';
 import $menusEvent from './event';
 
-Vue3Menus.install = (app, options = {}) => {
-  app.component(options.name || Vue3Menus.name, Vue3Menus);
-};
-
 const directive = {
   mounted(el, { value, arg, instance }) {
     if (arg === undefined || arg === 'right') {
@@ -32,10 +28,6 @@ const install = function (app, options = {}) {
   app.component(options.name || Vue3Menus.name, Vue3Menus);
   app.directive('menus', directive);
   app.config.globalProperties.$menusEvent = (event, menus) => $menusEvent(menus, event);
-}
-
-if (typeof window !== "undefined" && window.Vue) {
-  window.Vue3Menus = install;
 }
 
 const menusEvent = (event, menus) => $menusEvent(menus, event);
