@@ -1,11 +1,11 @@
 
 
 <script>
-import { watch, h, defineComponent, createApp } from "vue";
+import { watch, h, createApp } from "vue";
 import Menus from './Menus.vue';
 
-export default defineComponent({
-  name: "Vue3Menus",
+export default {
+  name: "vue3-menus",
   props: {
     menus: {
       type: Array,
@@ -82,5 +82,5 @@ export default defineComponent({
   render() {
     return null;
   }
-});
+};
 </script>

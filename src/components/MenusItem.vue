@@ -40,11 +40,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-
 import MenusIcon from './MenusIcon.vue';
 
-export default defineComponent({
+export default {
   name: "menus-item",
   components: {
     MenusIcon
@@ -100,7 +98,7 @@ export default defineComponent({
       menusClick
     };
   },
-});
+};
 </script>
 
 <style>

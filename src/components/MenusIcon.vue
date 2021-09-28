@@ -1,10 +1,10 @@
 
 
 <script>
-import { h, defineComponent } from "vue";
+import { h } from "vue";
 
-export default defineComponent({
-  name: "Vue3Menus",
+export default {
+  name: "menus-icon",
   props: {
     options: {
       type: [Function, Object],
@@ -21,5 +21,5 @@ export default defineComponent({
     }
     return null;
   }
-});
+};
 </script>

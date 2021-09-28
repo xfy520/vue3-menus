@@ -1,4 +1,4 @@
-import Vue3Menus from './components/Vue3Menus.vue';
+import Vue3Menus from './Vue3Menus.vue';
 import $menusEvent from './event';
 
 Vue3Menus.install = (app, options = {}) => {
@@ -41,15 +41,8 @@ if (typeof window !== "undefined" && window.Vue) {
 const menusEvent = (event, menus) => $menusEvent(menus, event);
 
 export {
+  install,
   Vue3Menus,
   directive,
   menusEvent
 }
-
-export default {
-	version: '1.0.8',
-	install,
-  Vue3Menus,
-  directive,
-  menusEvent
-};

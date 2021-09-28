@@ -42,11 +42,11 @@
 </template>
 
 <script>
-import { ref, h, defineComponent, onMounted, createApp, nextTick } from "vue";
+import { ref, h, onMounted, createApp, nextTick } from "vue";
 import Menus from './Menus.vue';
 import MenusItem from './MenusItem.vue'
 
-export default defineComponent({
+export default {
   name: "menus",
   components: {
     MenusItem
@@ -224,7 +224,7 @@ export default defineComponent({
       slots
     };
   },
-});
+};
 </script>
 
 <style scoped>

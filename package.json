@@ -1,6 +1,6 @@
 {
   "name": "vue3-menus",
-  "version": "1.0.8",
+  "version": "1.0.16",
   "author": "xufangyi",
   "private": false,
   "description": "Vue3.0 左右键菜单",
@@ -12,21 +12,20 @@
     "vue-contextmenu",
     "vue3-contextmenu"
   ],
-  "main": "dist/vue3-menus.umd.min.js",
+  "main": "dist/vue3-menus.js",
+  "module": "dist/vue3-menus.es.js",
   "types": "./index.d.ts",
   "files": [
     "package.json",
     "README.md",
     ".gitignore",
     "LICENSE",
-    "lib",
-    "index.d.ts",
-    "dist/vue3-menus.common.js",
-    "dist/vue3-menus.common.js.map",
-    "dist/vue3-menus.umd.js",
-    "dist/vue3-menus.umd.js.map",
-    "dist/vue3-menus.umd.min.js",
-    "dist/vue3-menus.umd.min.js.map"
+    "dist/vue3-menus.es.js",
+    "dist/vue3-menus.es.min.js",
+    "dist/vue3-menus.js",
+    "dist/vue3-menus.min.js",
+    "src",
+    "index.d.ts"
   ],
   "license": "MIT",
   "repository": {
@@ -34,16 +33,22 @@
     "url": "https://github.com/xfy520/vue3-menus.git"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --name vue3-menus --entry ./lib/index.js --target lib"
+    "build": "rollup -c"
   },
   "dependencies": {},
   "devDependencies": {
-    "@ant-design/icons-vue": "^6.0.1",
-    "@element-plus/icons": "^0.0.11",
-    "@vue/cli-service": "^4.5.13",
+    "@babel/core": "^7.15.5",
     "@vue/compiler-sfc": "3.0.0",
-    "vue": "3.0.0",
-    "vue-router": "^4.0.11"
+    "rollup": "^2.57.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-postcss": "3.1.8",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-plugin-vue": "^6.0.0",
+    "vue": "3.0.0"
   }
 }

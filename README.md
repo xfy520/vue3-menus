@@ -1,6 +1,6 @@
 # vue3-menus
 
-Vue3.0 自定义右键菜单
+Vue3.0 自定义右键菜单，支持 Vite2.0
 
 Vue3.0 原生实现完全自定义右键菜单组件, 零依赖，可根据可视区域自动调节显示位置，可支持插槽完全重写每一项菜单
 
@@ -31,7 +31,7 @@ yarn add vue3-menus
 <script src="https://unpkg.com/vue3-menus/dist/vue3-menus.umd.min.js">
 ```
 
-## 使用
+## 使用（Vite 情况下同样使用）
 
 CDN引入则不需要 `app.use(Vue3Menus)`
 > 样例中使用的是`@ant-design/icons-vue`图标与`@element-plus/icons`图标、图标可以使用`html`代码传入、也可以通过插槽`自定义图标`、也可以`完全重写每一项菜单`
@@ -346,41 +346,6 @@ export default defineComponent({
 </script>
 ```
 
-## Vite下使用
-
-### 使用方式1
-
-```js
-import { createApp } from 'vue';
-import App from './App.vue';
-import Vue3Menus from 'https://esm.sh/vue3-menus@1.0.3'; // 也可以将1.0.3换成其他版本号
-const app = createApp(App);
-app.mount('#app');
-```
-
-### 使用方式2
-
-> 在vite配置文件vite.config中进行别名替换
-
-```js
-import { createApp } from 'vue';
-import App from './App.vue';
-import Vue3Menus from 'vue3-menus';
-const app = createApp(App);
-app.mount('#app');
-```
-
-```js
-export default {
-  resolve: {
-    alias: {
-      // 其他配置
-      'vue3-menus': 'https://esm.sh/vue3-menus@1.0.3'// 也可以将1.0.3换成其他版本号
-    }
-  }
-}
-```
-
 ## 参数说明
 
 ### 单个菜单项参数`MenusItemOptions`
@@ -411,21 +376,21 @@ export default {
 
 ### 组件`Vue3Menus`参数
 
-|  属性   |       描述       |   类型    | 是否必填 | 默认值  |                    插槽传入值                     |
-| :-----: | :--------------: | :-------: | :------: | :-----: | :-----------------------------------------------: |
-|     menus      |               菜单列表信息               |   `MenusItemOptions[]`   |        `true`        |   []   |
-|   menusStyle   |              菜单容器的样式              |         `object`         |       `false`        |   {}   |
-| menusItemClass |          菜单每一项的`class`名           |         `string`         |       `false`        | `null` |
-|     event      |     鼠标事件信息(指令使用时可以不传)     |         `Event`          | 与`position`必填一项 |   {}   |
-|    position    | 手动传入菜单显示位置(指令使用时可以不传) | `{x: number, y: number}` |  与`event`必填一项   |   {}   |
-|    minWidth    |             菜单容器最小宽度             |  `number`  \| `string`   |       `false`        | `none` |
-|    maxWidth    |             菜单容器最打宽度             |  `number`  \| `string`   |       `false`        | `none` |
-|     zIndex     |                 菜单层级                 |  `number`  \| `string`   |       `false`        |  `3`   |
-|  open   | 控制菜单组件显示: `v-model:open` | `boolean` |  `true`  | `false` |                      `false`                      |
-| default |     默认插槽     |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|  icon   |     图标插槽     |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|  label  |   菜单标题插槽   |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-| suffix  |   菜单后缀插槽   |  `Slot`   | `false`  |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|      属性      |                   描述                   |           类型           |       是否必填       | 默认值  |                    插槽传入值                     |
+| :------------: | :--------------------------------------: | :----------------------: | :------------------: | :-----: | :-----------------------------------------------: |
+|     menus      |               菜单列表信息               |   `MenusItemOptions[]`   |        `true`        |   []    |
+|   menusStyle   |              菜单容器的样式              |         `object`         |       `false`        |   {}    |
+| menusItemClass |          菜单每一项的`class`名           |         `string`         |       `false`        | `null`  |
+|     event      |     鼠标事件信息(指令使用时可以不传)     |         `Event`          | 与`position`必填一项 |   {}    |
+|    position    | 手动传入菜单显示位置(指令使用时可以不传) | `{x: number, y: number}` |  与`event`必填一项   |   {}    |
+|    minWidth    |             菜单容器最小宽度             |  `number`  \| `string`   |       `false`        | `none`  |
+|    maxWidth    |             菜单容器最打宽度             |  `number`  \| `string`   |       `false`        | `none`  |
+|     zIndex     |                 菜单层级                 |  `number`  \| `string`   |       `false`        |   `3`   |
+|      open      |     控制菜单组件显示: `v-model:open`     |        `boolean`         |        `true`        | `false` |                      `false`                      |
+|    default     |                 默认插槽                 |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|      icon      |                 图标插槽                 |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|     label      |               菜单标题插槽               |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|     suffix     |               菜单后缀插槽               |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 
 ### 指令使用配置
 

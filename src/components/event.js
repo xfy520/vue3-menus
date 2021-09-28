@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import Menus from './components/Menus.vue';
+import Menus from './Menus.vue';
 
 let lastInstance = null;
 
