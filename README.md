@@ -1,6 +1,6 @@
 # vue3-menus
 
-Vue3.0 自定义右键菜单，支持 Vite2.0
+Vue3.0 自定义右键菜单，支持 Vite2.0，[官网](https://doc.wssio.com/opensource/vue3-menus/)
 
 Vue3.0 原生实现完全自定义右键菜单组件, 零依赖，可根据可视区域自动调节显示位置，可支持插槽完全重写每一项菜单
 
