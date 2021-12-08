@@ -1,60 +1,40 @@
-type elementIconType = import('vue').DefineComponent<{}, {}, {}, {}, {}, import('vue').ComponentOptionsMixin,
-    import('vue').ComponentOptionsMixin, import('vue').EmitsOptions, string,
-    import('vue').VNodeProps & import('vue').AllowedComponentProps & import('vue').ComponentCustomProps, Readonly<{} & {} & {}>, {}>;
-
-type antdvIconType = import('vue').FunctionalComponent;
-
-type menusItemType<I = string | elementIconType | antdvIconType> = {
+type menusItemType = {
   label: string;
-  icon?: I | {
-    node: I,
-    option?: {
-      [key: string]: unknown
-    }
-  };
-  disabled?: boolean;
-  divided?: boolean;
-  click?: (...arg: unknown[]) => unknown;
-  children?: Array<menusItemType>;
-  tip?: string;
-  hidden?: boolean;
   style?: {
     [key: string]: string | number
   }
+  icon?: string | unknown;
+  disabled?: boolean;
+  divided?: boolean;
+  enter?: (menu: menusItemType, args: unknown) => unknown;
+  click?: (menu: menusItemType, args: unknown) => unknown;
+  children?: Array<menusItemType>;
+  tip?: string;
+  hidden?: boolean;
 }
 
-type baseType<I = string | elementIconType | antdvIconType> = {
-  menus: Array<menusItemType<I>>;
-  menusStyle?: {
-    [key: string]: unknown
-  };
-  menusItemClass?: string;
+type menusType = {
+  menus: Array<menusItemType>;
+  itemClass?: string;
   minWidth?: number | string;
   maxWidth?: number | string;
   zIndex?: number | string;
+  direction?: "left" | "right";
+  enter?: (menu: menusItemType, args: unknown) => unknown;
+  click?: (menu: menusItemType, args: unknown) => unknown;
 }
 
-type menusType<I = string | elementIconType | antdvIconType> = {
-    event: MouseEvent;
-} & baseType<I> | {
-  position: {
-    x: number,
-    y: number
-  };
-} & baseType<I> | {
+type componentMenusType = menusType & {
   event?: MouseEvent;
-  position?: {
-    x: number,
-    y: number
-  };
-} & baseType<I>
+  open: boolean;
+  args?: unknown
+}
 
 declare module 'vue3-menus' {
-  export const Vue3Menus: import('vue').DefineComponent<menusType & {
-    open: boolean
-  }>;
+  export const Vue3Menus: import('vue').DefineComponent<componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType,
+    componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType>;
 
-  export const menusEvent: (event: MouseEvent, menus: menusType) => import('vue').ComponentPublicInstance;
+  export const menusEvent: (event: MouseEvent, menus: menusType, args: unknown) => void;
 
   export const directive: import('vue').Directive;
 
@@ -62,4 +42,9 @@ declare module 'vue3-menus' {
     name: string
   }) => unknown;
   export default install;
+}
+
+export {
+  menusType,
+  menusItemType
 }

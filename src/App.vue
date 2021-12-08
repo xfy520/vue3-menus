@@ -1,96 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<template>
+  <div class="menus-example" @click="click"></div>
+  <vue3-menus class="aaa" v-model:open="open" :event="event" :menus="menus"></vue3-menus>
+</template>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .github {
-      margin-top: 60px;
-      font-size: 36px;
-    }
+<script lang="ts">
+import { defineComponent, ref, nextTick } from 'vue';
 
-    .item {
-      display: inline-block;
-      background-color: aqua;
-      margin: 20px;
-      line-height: 200px;
-      padding: 0 20px;
-      height: 200px;
-    }
-
-    .menus-item-class:hover {
-      background: #090a0b;
-      color: #ff0202;
-    }
-
-    .my-menus-item {
-      display: flex;
-      line-height: 2rem;
-      padding: 0 1rem;
-      margin: 0;
-      font-size: 0.8rem;
-      outline: 0;
-      align-items: center;
-      transition: 0.2s;
-      box-sizing: border-box;
-      list-style: none;
-      border-bottom: 1px solid #00000000;
-    }
-
-    .my-menus-item-divided {
-      border-bottom-color: #ebeef5;
-    }
-
-    .my-menus-item-available {
-      color: #606266;
-      cursor: pointer;
-    }
-
-    .my-menus-item-available:hover {
-      background: #ecf5ff;
-      color: #409eff;
-    }
-
-    .my-menus-item-disabled {
-      color: #c0c4cc;
-      cursor: not-allowed;
-    }
-  </style>
-  <script src="https://unpkg.com/vue@3.0.5/dist/vue.global.js"></script>
-  <script src="../dist/vue3-menus.js"></script>
-</head>
-
-<body>
-  <a class="github" href="https://github.com/xfy520/vue3-menus" target="_blank"><svg focusable="false" class=""
-      data-icon="github" width="1em" height="1em" fill="currentColor" aria-hidden="true" viewBox="64 64 896 896">
-      <path
-        d="M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9a127.5 127.5 0 0138.1 91v112.5c.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z">
-      </path>
-    </svg></a>
-  <div id="app">
-    <div class="item" v-menus:left="menus">指令方式左击打开菜单</div>
-
-  </div>
-  <script>
-    const menus = [
+export default defineComponent({
+  name: 'App',
+  setup() {
+    const menus = ref([
       {
         label: "返回(B)",
         tip: 'Alt+向左箭头',
-        click: (menu, arg) => {
-
+        click: () => {
           window.history.back();
         }
       },
       {
         label: "点击不关闭菜单",
         tip: '不关闭菜单',
-        click: (menu, arg) => {
-          console.log({
-            menu, arg
-          })
+        click: () => {
           return false;
         }
       },
@@ -354,76 +284,70 @@
       },
       { label: "查看网页源代码(U)", tip: 'Ctrl+U' },
       { label: "检查(N)", tip: 'Ctrl+Shift+I' }
-    ];
+    ]);
+    const open = ref(false);
+    const event = ref({});
+    function click(e: any) {
+      open.value = false;
+      nextTick(() => {
+        event.value = e;
+        open.value = true;
+      })
+      e.preventDefault();
+    }
+    setTimeout(() => {
+      menus.value[1].label = '点击关闭菜单'
+      menus.value[6].children[0].disabled = true
+      menus.value[6].children[8].label = '123'
+      menus.value[6].children[9].children[2].children[1].label = '123'
+    }, 10000);
 
-    const vue3Composition = {
-      name: "Vue3Menus1",
-      setup() {
-        const isOpen1 = Vue.ref(false);
-        const isOpen2 = Vue.ref(false);
-        const isOpen3 = Vue.ref(false);
-        const eventVal = Vue.ref({});
-        function rightClick1(event) {
-          isOpen1.value = false;
-          Vue.nextTick(() => {
-            eventVal.value = event;
-            isOpen1.value = true;
-          })
-          event.preventDefault();
-        }
-        function rightClick2(event) {
-          isOpen2.value = false;
-          Vue.nextTick(() => {
-            eventVal.value = event;
-            isOpen2.value = true;
-          })
-          event.preventDefault();
-        }
-        function rightClick3(event) {
-          isOpen3.value = false;
-          Vue.nextTick(() => {
-            eventVal.value = event;
-            isOpen3.value = true;
-          })
-          event.preventDefault();
-        }
-        const menusOtions = Vue.shallowRef({
-          menus: menus
-        });
-        const menusStyleOtions = Vue.shallowRef({
-          menus: menus,
-          menusStyle: {
-            background: "#343131"
-          }
-        });
-        const menusItemClassOtions = Vue.shallowRef({
-          menus: menus,
-          menusStyle: {
-            background: "#343131"
-          },
-          menusItemClass: "menus-item-class"
-        });
-        const menusMinWidthOtions = Vue.shallowRef({
-          menus: menus,
-          minWidth: 300,
-        });
-        const menusMaxWidthOtions = Vue.shallowRef({
-          menus: menus,
-          maxWidth: 200,
-        });
-        return {
-          menus,
-          menusOtions, menusStyleOtions, menusItemClassOtions, menusMinWidthOtions,
-          menusMaxWidthOtions, isOpen1, isOpen2, isOpen3, rightClick1, rightClick2, rightClick3, eventVal
-        }
-      }
-    };
-    const app = Vue.createApp(vue3Composition);
-    app.component('vue3-menus', Vue3Menus.Vue3Menus);
-    app.config.globalProperties.$menusEvent = Vue3Menus.menusEvent;
-    app.directive('menus', Vue3Menus.directive);
-    app.mount("#app");
-  </script>
-</body>
+    return {
+      click,
+      menus,
+      open,
+      event
+    }
+  },
+});
+</script>
 
-</html>
+<style>
+.my-menus-item {
+  display: flex;
+  line-height: 2rem;
+  padding: 0 1rem;
+  margin: 0;
+  font-size: 0.8rem;
+  outline: 0;
+  align-items: center;
+  transition: 0.2s;
+  box-sizing: border-box;
+  list-style: none;
+  border-bottom: 1px solid #00000000;
+}
+
+.my-menus-item-divided {
+  border-bottom-color: #ebeef5;
+}
+
+.my-menus-item-available {
+  color: #606266;
+  cursor: pointer;
+}
+
+.my-menus-item-available:hover {
+  background: #ecf5ff;
+  color: #409eff;
+}
+
+.my-menus-item-active {
+  background: #ecf5ff;
+  color: #409eff;
+}
+
+.my-menus-item-disabled {
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+</style>

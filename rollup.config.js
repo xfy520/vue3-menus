@@ -5,25 +5,26 @@ import pluginVue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser'
 import { uglify } from 'rollup-plugin-uglify'
-import  clear  from  'rollup-plugin-clear'
+import clear from 'rollup-plugin-clear'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 module.exports = {
-  input: path.resolve(__dirname, './src/index.js'),
-  output:[
+  input: path.resolve(__dirname, './package/index.js'),
+  output: [
     {
       file: path.resolve(__dirname, './dist/vue3-menus.js'),
-      format:'umd',
-      name:'Vue3Menus',
+      format: 'umd',
+      name: 'Vue3Menus',
       globals: {
-        vue:'Vue'
+        vue: 'Vue'
       }
     },
     {
       file: path.resolve(__dirname, './dist/vue3-menus.min.js'),
-      format:'umd',
-      name:'Vue3Menus',
+      format: 'umd',
+      name: 'Vue3Menus',
       globals: {
-        vue:'Vue'
+        vue: 'Vue'
       },
       plugins: [
         uglify(),
@@ -31,32 +32,22 @@ module.exports = {
       ]
     },
     {
-      file: path.resolve(__dirname,'./dist/vue3-menus.es.js'),
-      format:'es',
+      file: path.resolve(__dirname, './dist/vue3-menus.es.js'),
+      format: 'es',
       globals: {
-        vue:'Vue'
+        vue: 'Vue'
       }
-    },
-    {
-      file: path.resolve(__dirname,'./dist/vue3-menus.es.min.js'),
-      format:'es',
-      globals: {
-        vue:'Vue'
-      },
-      plugins: [
-        uglify(),
-        terser()
-      ]
     }
   ],
-  plugins:[
+  plugins: [
     resolve(),
+    vueJsx(),
     pluginVue(),
     commonjs(),
     postcss(),
-    clear ({
+    clear({
       targets: ['./dist'],
-      watch : true ,
+      watch: true,
     })
   ],
   external: [

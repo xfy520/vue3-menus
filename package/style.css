@@ -1,0 +1,86 @@
+.menus-fade-enter-active,
+.menus-fade-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+.menus-fade-enter-from,
+.menus-fade-leave-to {
+  opacity: 0;
+}
+
+.v3-menus {
+  position: fixed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  background: #fff;
+  border-radius: 4px;
+  padding: 8px 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.v3-menus-body {
+  display: block;
+}
+
+.v3-menus-item {
+  display: flex;
+  line-height: 2rem;
+  padding: 0 1rem;
+  margin: 0;
+  font-size: 0.8rem;
+  outline: 0;
+  align-items: center;
+  transition: 0.2s;
+  box-sizing: border-box;
+  list-style: none;
+  border-bottom: 1px solid #00000000;
+}
+
+.v3-menus-divided {
+  border-bottom-color: #ebeef5;
+}
+
+.v3-menus-icon {
+  display: flex;
+  margin-right: 0.6rem;
+  width: 1rem;
+}
+
+.v3-menus-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3-menus-suffix {
+  margin-left: 1.5rem;
+  font-size: 0.39rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3-menus-available {
+  color: #606266;
+  cursor: pointer;
+}
+
+.v3-menus-available:hover {
+  background: #ecf5ff;
+  color: #409eff;
+}
+
+.v3-menus-disabled {
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+
+.v3-menus-active {
+  background: #ecf5ff;
+  color: #409eff;
+}
+
+.v3-menus-tip {
+  font-size: 9px;
+  color: #999;
+}

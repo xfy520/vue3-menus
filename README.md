@@ -61,9 +61,9 @@ app.mount('#app');
     <div class="div" v-menus:left="menus">指令方式打开菜单</div>
     <div class="div" @click.stop @contextmenu="($event) => $menusEvent($event, menus)">事件方式打开菜单</div>
     <div class="div" @click.stop @contextmenu="rightClick">组件方式打开菜单</div>
-    <vue3-menus v-model:open="isOpen" :event="eventVal" :menus="menus.menus" hasIcon>
-      <template #icon="{item: {activeIndex}}">{{activeIndex}}</template>
-      <template #label="{ item: { item } }">插槽：{{ item.label }}</template>
+    <vue3-menus :open="isOpen" :event="eventVal" :menus="menus.menus">
+      <template #icon="{menu, activeIndex, index}">{{activeIndex}}</template>
+      <template #label="{ menu, activeIndex, index }">插槽：{{ menu.label }}</template>
     </vue3-menus>
   </div>
 </template>
@@ -109,12 +109,6 @@ export default defineComponent({
         {
           label: "重新加载(R)",
           tip: 'Ctrl+R',
-          icon: {
-            node: SyncOutlined,
-            option: {
-              spin: true
-            }
-          },
           click: () => location.reload(),
           divided: true
         },
@@ -125,12 +119,6 @@ export default defineComponent({
         {
           label: "打印(P)...",
           tip: 'Ctrl+P',
-          icon: {
-            node: Printer,
-            option: {
-              color: 'red'
-            }
-          },
           click: () => window.print(),
         },
         {
@@ -139,7 +127,6 @@ export default defineComponent({
         },
         {
           label: '发送到你的设备',
-          icon: WindowsOutlined,
           children: [
             {
               label: 'iPhone',
@@ -155,14 +142,6 @@ export default defineComponent({
         {
           label: "为此页面创建二维码",
           divided: true,
-          icon: {
-            node: QrcodeOutlined,
-            option: {
-              style: {
-                color: 'aqua'
-              }
-            }
-          }
         },
         {
           label: "使用网页翻译(F)",
@@ -300,8 +279,8 @@ export default defineComponent({
 <template>
   <div class="div" @click.stop @contextmenu="rightClick">组件方式打开菜单</div>
   <vue3-menus v-model:open="isOpen" :event="eventVal" :menus="menus" hasIcon>
-    <template #icon="{item: {activeIndex}}">{{activeIndex}}</template>
-    <template #label="{ item: { item } }">插槽：{{ item.label }}</template>
+    <template #icon="{menu, activeIndex, index}">{{activeIndex}}</template>
+    <template #label="{ menu, activeIndex, index}">插槽：{{ menu.label }}</template>
   </vue3-menus>
 </template>
 <script>
@@ -350,49 +329,55 @@ export default defineComponent({
 
 ### 单个菜单项参数`MenusItemOptions`
 
-|   属性   |                                          描述                                          |         类型         | 是否必填 |   默认值    |
-| :------: | :------------------------------------------------------------------------------------: | :------------------: | :------: | :---------: |
-|  label   |                                       菜单项名称                                       |       `string`       |  `true`  |      —      |
-|  style   |                                 每一项菜单的自定义样式                                 |       `object`       | `false`  |    `{}`     |
-|   icon   | `string`: 传入图标html代码、`object`: 传入组件或者`{node: 组件, option: 组件配置参数}` | `string` \| `object` | `false`  | `undefined` |
-| disabled |                                     是否禁用菜单项                                     |      `boolean`       | `false`  | `undefined` |
-| divided  |                                     是否显示分割线                                     |      `boolean`       | `false`  | `undefined` |
-|   tip    |                                  没项菜单后面的小提示                                  |       `string`       | `false`  |    `''`     |
-|  click   |                     菜单项点击事件，返回`null`或`false`不关闭菜单                      |     `Function()`     | `false`  | `undefined` |
-| children |                                     子菜单列表信息                                     | `MenusItemOptions[]` | `false`  | `undefined` |
+|   属性   |                             描述                             |          类型          | 是否必填 |   默认值    |
+| :------: | :----------------------------------------------------------: | :--------------------: | :------: | :---------: |
+|  label   |                          菜单项名称                          |        `string`        |  `true`  |      —      |
+|  style   |                    每一项菜单的自定义样式                    |        `object`        | `false`  |    `{}`     |
+|   icon   | 图标参数，内部支持html字符串图标，传入组件时需要实现icon插槽 | `string` \| `其他类型` | `false`  | `undefined` |
+| disabled |                        是否禁用菜单项                        |       `boolean`        | `false`  | `undefined` |
+| divided  |                        是否显示分割线                        |       `boolean`        | `false`  | `undefined` |
+|   tip    |                     没项菜单后面的小提示                     |        `string`        | `false`  |    `''`     |
+|  hidden  |                         是否隐藏该项                         |       `boolean`        | `false`  | `undefined` |
+| children |                        子菜单列表信息                        |  `MenusItemOptions[]`  | `false`  | `undefined` |
+|  enter   |       菜单项移入事件，返回`null`或`false`不展开子菜单        |      `Function()`      | `false`  | `undefined` |
+|  click   |        菜单项点击事件，返回`null`或`false`不关闭菜单         |      `Function()`      | `false`  | `undefined` |
 
-### 公共参数`MenuOptions`
+### 方法使用参数
 
-|      属性      |                   描述                   |           类型           |       是否必填       | 默认值 |
-| :------------: | :--------------------------------------: | :----------------------: | :------------------: | :----: |
-|     menus      |               菜单列表信息               |   `MenusItemOptions[]`   |        `true`        |   []   |
-|   menusStyle   |              菜单容器的样式              |         `object`         |       `false`        |   {}   |
-| menusItemClass |          菜单每一项的`class`名           |         `string`         |       `false`        | `null` |
-|     event      |     鼠标事件信息(指令使用时可以不传)     |         `Event`          | 与`position`必填一项 |   {}   |
-|    position    | 手动传入菜单显示位置(指令使用时可以不传) | `{x: number, y: number}` |  与`event`必填一项   |   {}   |
-|    minWidth    |             菜单容器最小宽度             |  `number`  \| `string`   |       `false`        | `none` |
-|    maxWidth    |             菜单容器最打宽度             |  `number`  \| `string`   |       `false`        | `none` |
-|     zIndex     |                 菜单层级                 |  `number`  \| `string`   |       `false`        |  `3`   |
+|   属性    |                      描述                       |         类型          | 是否必填 |   默认值    |
+| :-------: | :---------------------------------------------: | :-------------------: | :------: | :---------: |
+|   menus   |                  菜单列表信息                   | `MenusItemOptions[]`  |  `true`  |     []      |
+| itemClass |              菜单每一项的`class`名              |       `string`        | `false`  |   `null`    |
+| minWidth  |                菜单容器最小宽度                 | `number`  \| `string` | `false`  |   `none`    |
+| maxWidth  |                菜单容器最打宽度                 | `number`  \| `string` | `false`  |   `none`    |
+|  zIndex   |                    菜单层级                     | `number`  \| `string` | `false`  |     `3`     |
+| direction |                  菜单打开方向                   |  `left`  \| `right`   | `false`  |   `right`   |
+|   enter   | 菜单项移入事件，返回`null`或`false`不展开子菜单 |     `Function()`      | `false`  | `undefined` |
+|   click   |  菜单项点击事件，返回`null`或`false`不关闭菜单  |     `Function()`      | `false`  | `undefined` |
 
-### 组件`Vue3Menus`参数
+### 组件使用参数
 
-|      属性      |                   描述                   |           类型           |       是否必填       | 默认值  |                    插槽传入值                     |
-| :------------: | :--------------------------------------: | :----------------------: | :------------------: | :-----: | :-----------------------------------------------: |
-|     menus      |               菜单列表信息               |   `MenusItemOptions[]`   |        `true`        |   []    |
-|   menusStyle   |              菜单容器的样式              |         `object`         |       `false`        |   {}    |
-| menusItemClass |          菜单每一项的`class`名           |         `string`         |       `false`        | `null`  |
-|     event      |     鼠标事件信息(指令使用时可以不传)     |         `Event`          | 与`position`必填一项 |   {}    |
-|    position    | 手动传入菜单显示位置(指令使用时可以不传) | `{x: number, y: number}` |  与`event`必填一项   |   {}    |
-|    minWidth    |             菜单容器最小宽度             |  `number`  \| `string`   |       `false`        | `none`  |
-|    maxWidth    |             菜单容器最打宽度             |  `number`  \| `string`   |       `false`        | `none`  |
-|     zIndex     |                 菜单层级                 |  `number`  \| `string`   |       `false`        |   `3`   |
-|      open      |     控制菜单组件显示: `v-model:open`     |        `boolean`         |        `true`        | `false` |                      `false`                      |
-|    default     |                 默认插槽                 |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|      icon      |                 图标插槽                 |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|     label      |               菜单标题插槽               |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|     suffix     |               菜单后缀插槽               |          `Slot`          |       `false`        |    -    | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|   属性    |                      描述                       |         类型          |       是否必填       |   默认值    |                    插槽传入值                     |
+| :-------: | :---------------------------------------------: | :-------------------: | :------------------: | :---------: | :-----------------------------------------------: |
+|   menus   |                  菜单列表信息                   | `MenusItemOptions[]`  |        `true`        |     []      |                                                   |
+|   event   |        鼠标事件信息(指令使用时可以不传)         |        `Event`        | 与`position`必填一项 |     {}      |                                                   |
+| itemClass |              菜单每一项的`class`名              |       `string`        |       `false`        |   `null`    |                                                   |
+| minWidth  |                菜单容器最小宽度                 | `number`  \| `string` |       `false`        |   `none`    |                                                   |
+| maxWidth  |                菜单容器最打宽度                 | `number`  \| `string` |       `false`        |   `none`    |                                                   |
+|  zIndex   |                    菜单层级                     | `number`  \| `string` |       `false`        |     `3`     |                                                   |
+| direction |                  菜单打开方向                   |  `left`  \| `right`   |       `false`        |   `right`   |                                                   |
+|   open    |                控制菜单组件显示                 |       `boolean`       |        `true`        |   `false`   |                                                   |
+|   args    |                    附加参数                     |       `unknown`       |       `false`        | `undefined` |                                                   |
+|   enter   | 菜单项移入事件，返回`null`或`false`不展开子菜单 |     `Function()`      |       `false`        | `undefined` |                                                   |
+|   click   |  菜单项点击事件，返回`null`或`false`不关闭菜单  |     `Function()`      |       `false`        | `undefined` |                                                   |
+|  default  |                    默认插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|   icon    |                    图标插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|   label   |                  菜单标题插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|  suffix   |                  菜单后缀插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 
 ### 指令使用配置
+
+> 配置参数与方法使用相同
 
 | 指令使用方式  |            描述            |   参数类型    | 参数是否必填 | 默认值 |
 | :-----------: | :------------------------: | :-----------: | :----------: | :----: |
