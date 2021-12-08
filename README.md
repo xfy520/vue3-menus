@@ -342,7 +342,7 @@ export default defineComponent({
 |  enter   |       菜单项移入事件，返回`null`或`false`不展开子菜单        |      `Function()`      | `false`  | `undefined` |
 |  click   |        菜单项点击事件，返回`null`或`false`不关闭菜单         |      `Function()`      | `false`  | `undefined` |
 
-### 方法使用参数
+### 指令与方法使用参数
 
 |   属性    |                      描述                       |         类型          | 是否必填 |   默认值    |
 | :-------: | :---------------------------------------------: | :-------------------: | :------: | :---------: |

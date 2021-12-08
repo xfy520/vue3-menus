@@ -72,15 +72,14 @@ const props = {
   }
 }
 
-const windowWidth = globalThis.document.documentElement.clientWidth
-const windowHeight = globalThis.document.documentElement.clientHeight
-
 const vue3MenusComponent = defineComponent({
   name: 'vue3-menus',
   inheritAttrs: false,
   props,
   emits: ['on-click', 'on-enter'],
   setup(props, { slots, emit, attrs }) {
+    const windowWidth = globalThis.document.documentElement.clientWidth
+    const windowHeight = globalThis.document.documentElement.clientHeight
     const { proxy } = getCurrentInstance()
     const show = ref(props.open)
     const self: any = {}
