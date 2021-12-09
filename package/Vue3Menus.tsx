@@ -297,7 +297,7 @@ const vue3MenusComponent = defineComponent({
                           <div style={menu.style} class={$class.join(' ')} onClick={($event) => mouseClick($event, menu)}
                             onMouseenter={($event) => mouseEnter($event, menu, index)} onContextmenu={($event) => mouseClick($event, menu)}
                           >
-                            {hasIcon ? <div class='v3-menus-icon '>{icon ? icon({ menu, activeIndex, index }) : <span v-html={menu.icon}></span>}</div> : null}
+                            {hasIcon.value ? <div class='v3-menus-icon '>{icon ? icon({ menu, activeIndex, index }) : <span v-html={menu.icon}></span>}</div> : null}
                             {label ? <span class='v3-menus-label'>{label({ menu, activeIndex, index })}</span> : <span class='v3-menus-label'>{menu.label}</span>}
                             {
                               menu.children || menu.tip ?

@@ -35,9 +35,9 @@ declare module 'vue3-menus' {
   export const Vue3Menus: import('vue').DefineComponent<componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType,
     componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType, componentMenusType>;
 
-  export const menusEvent: (event: MouseEvent, menus: menusType, args: unknown) => void;
+  export const menusEvent: (event: MouseEvent, menus: menusType | Array<menusItemType>, args: unknown) => void;
 
-  export const directive: import('vue').Directive;
+  export const directive: import('vue').Directive<any, menusType | Array<menusItemType>>;
 
   const install: (app: import('vue').App, options: {
     name: string
