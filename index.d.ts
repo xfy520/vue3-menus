@@ -21,8 +21,6 @@ type menusType = {
   maxWidth?: number | string;
   zIndex?: number | string;
   direction?: "left" | "right";
-  enter?: (menu: menusItemType, args: unknown) => unknown;
-  click?: (menu: menusItemType, args: unknown) => unknown;
 }
 
 type componentMenusType = menusType & {

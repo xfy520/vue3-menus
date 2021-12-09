@@ -5,25 +5,6 @@ import {
 import { menusItemType } from '../index'
 import './style.css'
 
-type ctxType = {
-  $attrs: {
-    [key: string]: unknown
-  }
-  style: {
-    [key: string]: unknown
-  }
-  $slots: {
-    [key: string]: any
-  }
-  activeIndex: number
-  itemClass: string | null
-  hasIcon: boolean
-  show: boolean
-  menus: Array<menusItemType>
-  mouseEnter: (event: MouseEvent, menu: menusItemType, index: number) => void
-  mouseClick: (event: MouseEvent, menu: menusItemType) => void
-}
-
 const props = {
   menus: {
     type: Array as PropType<Array<menusItemType>>,
@@ -60,12 +41,6 @@ const props = {
     type: String,
     default: 'right'
   },
-  click: {
-    type: Function
-  },
-  enter: {
-    type: Function
-  },
   open: {
     type: Boolean,
     default: false
@@ -80,8 +55,7 @@ const vue3MenusComponent = defineComponent({
   name: 'vue3-menus',
   inheritAttrs: false,
   props,
-  emits: ['on-click', 'on-enter'],
-  setup(props, { slots, emit, attrs }) {
+  setup(props, { slots, attrs }) {
     const windowWidth = globalThis.document.documentElement.clientWidth
     const windowHeight = globalThis.document.documentElement.clientHeight
     const { proxy } = getCurrentInstance()
@@ -191,7 +165,6 @@ const vue3MenusComponent = defineComponent({
     })
 
     function mouseEnter(event: any, menu: menusItemType, index: number) {
-      emit('on-enter', menu, props.args)
       event.preventDefault();
       activeIndex.value = index
       if (!menu || menu.disabled || menu.hidden) {
@@ -208,8 +181,7 @@ const vue3MenusComponent = defineComponent({
       if (!menu.children) {
         return;
       }
-      let enter = props.enter && typeof props.enter === 'function' ? props.enter : null
-      enter = menu.enter && typeof menu.enter === 'function' ? menu.enter : enter
+      const enter = menu.enter && typeof menu.enter === 'function' ? menu.enter : null
       if (enter) {
         const val = enter(menu, props.args);
         if (val === false || val === null) {
@@ -244,14 +216,12 @@ const vue3MenusComponent = defineComponent({
       self.index = index;
     }
     function mouseClick(event: any, menu: menusItemType) {
-      emit('on-click', menu, props.args)
       event.preventDefault();
       if (!menu || menu.disabled) {
         event.stopPropagation();
         return;
       }
-      let click = props.click && typeof props.click === 'function' ? props.click : null
-      click = menu.click && typeof menu.click === 'function' ? menu.click : click
+      const click = menu.click && typeof menu.click === 'function' ? menu.click : null
       if (click) {
         const val = click(menu, props.args);
         if (val === false || val === null) {

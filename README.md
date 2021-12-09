@@ -353,8 +353,6 @@ export default defineComponent({
 | maxWidth  |                菜单容器最打宽度                 | `number`  \| `string` | `false`  |   `none`    |
 |  zIndex   |                    菜单层级                     | `number`  \| `string` | `false`  |     `3`     |
 | direction |                  菜单打开方向                   |  `left`  \| `right`   | `false`  |   `right`   |
-|   enter   | 菜单项移入事件，返回`null`或`false`不展开子菜单 |     `Function()`      | `false`  | `undefined` |
-|   click   |  菜单项点击事件，返回`null`或`false`不关闭菜单  |     `Function()`      | `false`  | `undefined` |
 
 ### 组件使用参数
 
@@ -370,8 +368,6 @@ export default defineComponent({
 | direction |                  菜单打开方向                   |  `left`  \| `right`   |       `false`        |   `right`   |                                                   |
 |   open    |                控制菜单组件显示                 |       `boolean`       |        `true`        |   `false`   |                                                   |
 |   args    |                    附加参数                     |       `unknown`       |       `false`        | `undefined` |                                                   |
-|   enter   | 菜单项移入事件，返回`null`或`false`不展开子菜单 |     `Function()`      |       `false`        | `undefined` |                                                   |
-|   click   |  菜单项点击事件，返回`null`或`false`不关闭菜单  |     `Function()`      |       `false`        | `undefined` |                                                   |
 |  default  |                    默认插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 |   icon    |                    图标插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
 |   label   |                  菜单标题插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
