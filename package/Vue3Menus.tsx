@@ -29,6 +29,10 @@ const props = {
     type: Array as PropType<Array<menusItemType>>,
     required: true
   },
+  menusClass: {
+    type: String,
+    default: null
+  },
   itemClass: {
     type: String,
     default: null
@@ -229,7 +233,7 @@ const vue3MenusComponent = defineComponent({
         },
         slots
       )
-      const container = document.createElement('div')
+      const container = globalThis.document.createElement('div')
       render(vm, container)
       vm.component.props.open = true
       // @ts-ignore
@@ -268,7 +272,7 @@ const vue3MenusComponent = defineComponent({
       })
     }
     const { default: $default, label, icon, suffix } = slots
-    const $class = ['v3-menus', attrs.class]
+    const $class = ['v3-menus', attrs.class, props.menusClass]
     return () => (
       <Teleport to='body'>
         <Transition name='menus-fade'>

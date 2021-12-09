@@ -19,7 +19,7 @@ function mouseEvent(menus, args, event) {
     }
   }
   const vNode = createVNode(Vue3Menus, props)
-  const container = document.createElement('div')
+  const container = globalThis.document.createElement('div')
   render(vNode, container)
   vNode.component.props.open = true
   vNode.component.proxy.closeAll = () => {

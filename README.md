@@ -347,6 +347,7 @@ export default defineComponent({
 |   属性    |                      描述                       |         类型          | 是否必填 |   默认值    |
 | :-------: | :---------------------------------------------: | :-------------------: | :------: | :---------: |
 |   menus   |                  菜单列表信息                   | `MenusItemOptions[]`  |  `true`  |     []      |
+| menusClass |              菜单外层 `div` 的 `class` 名              |       `string`        | `false`  |   `null`    |
 | itemClass |              菜单每一项的`class`名              |       `string`        | `false`  |   `null`    |
 | minWidth  |                菜单容器最小宽度                 | `number`  \| `string` | `false`  |   `none`    |
 | maxWidth  |                菜单容器最打宽度                 | `number`  \| `string` | `false`  |   `none`    |
@@ -360,7 +361,8 @@ export default defineComponent({
 |   属性    |                      描述                       |         类型          |       是否必填       |   默认值    |                    插槽传入值                     |
 | :-------: | :---------------------------------------------: | :-------------------: | :------------------: | :---------: | :-----------------------------------------------: |
 |   menus   |                  菜单列表信息                   | `MenusItemOptions[]`  |        `true`        |     []      |                                                   |
-|   event   |        鼠标事件信息(指令使用时可以不传)         |        `Event`        | 与`position`必填一项 |     {}      |                                                   |
+|   event   |        鼠标事件信息(指令使用时不传)         |        `Event`        | 与`position`必填一项 |     {}      |                                                   |
+| menusClass |              菜单外层 `div` 的 `class` 名         |       `string`        |       `false`        |   `null`    |                                                   |
 | itemClass |              菜单每一项的`class`名              |       `string`        |       `false`        |   `null`    |                                                   |
 | minWidth  |                菜单容器最小宽度                 | `number`  \| `string` |       `false`        |   `none`    |                                                   |
 | maxWidth  |                菜单容器最打宽度                 | `number`  \| `string` |       `false`        |   `none`    |                                                   |

@@ -15,6 +15,7 @@ type menusItemType = {
 
 type menusType = {
   menus: Array<menusItemType>;
+  menusClass?: string;
   itemClass?: string;
   minWidth?: number | string;
   maxWidth?: number | string;
@@ -25,7 +26,7 @@ type menusType = {
 }
 
 type componentMenusType = menusType & {
-  event?: MouseEvent;
+  event: MouseEvent;
   open: boolean;
   args?: unknown
 }
