@@ -368,10 +368,10 @@ export default defineComponent({
 | direction |                  菜单打开方向                   |  `left`  \| `right`   |       `false`        |   `right`   |                                                   |
 |   open    |                控制菜单组件显示                 |       `boolean`       |        `true`        |   `false`   |                                                   |
 |   args    |                    附加参数                     |       `unknown`       |       `false`        | `undefined` |                                                   |
-|  default  |                    默认插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|   icon    |                    图标插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|   label   |                  菜单标题插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
-|  suffix   |                  菜单后缀插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中项, `item`: 当前菜单属性值 |
+|  default  |                    默认插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中索引, `menu`: 当前菜单项 `MenusItemOptions`, `index`: 当前菜单索引 |
+|   icon    |                    图标插槽                     |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中索引, `menu`: 当前菜单项 `MenusItemOptions`, `index`: 当前菜单索引 |
+|   label   |                  菜单标题插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中索引, `menu`: 当前菜单项 `MenusItemOptions`, `index`: 当前菜单索引 |
+|  suffix   |                  菜单后缀插槽                   |        `Slot`         |       `false`        |      -      | `activeIndex`: 当前选中索引, `menu`: 当前菜单项 `MenusItemOptions`, `index`: 当前菜单索引 |
 
 ### 指令使用配置
 
