@@ -258,7 +258,7 @@ const vue3MenusComponent = defineComponent({
                       if ($default) {
                         return (
                           <div onContextmenu={($event) => mouseClick($event, menu)}
-                            onClick={($event) => mouseClick($event, menu)} onMouseenter={($event) => mouseEnter($event, menu, index)}>{$default({ menu, activeIndex, index })}</div>
+                            onClick={($event) => mouseClick($event, menu)} onMouseenter={($event) => mouseEnter($event, menu, index)}>{$default({ menu, activeIndex: activeIndex.value, index })}</div>
                         )
                       } else {
                         let $class = [props.itemClass, 'v3-menus-item', menu.disabled ? 'v3-menus-disabled' : 'v3-menus-available']
@@ -267,12 +267,12 @@ const vue3MenusComponent = defineComponent({
                           <div style={menu.style} class={$class.join(' ')} onClick={($event) => mouseClick($event, menu)}
                             onMouseenter={($event) => mouseEnter($event, menu, index)} onContextmenu={($event) => mouseClick($event, menu)}
                           >
-                            {hasIcon.value ? <div class='v3-menus-icon '>{icon ? icon({ menu, activeIndex, index }) : <span v-html={menu.icon}></span>}</div> : null}
-                            {label ? <span class='v3-menus-label'>{label({ menu, activeIndex, index })}</span> : <span class='v3-menus-label'>{menu.label}</span>}
+                            {hasIcon.value ? <div class='v3-menus-icon '>{icon ? icon({ menu, activeIndex: activeIndex.value, index }) : <span v-html={menu.icon}></span>}</div> : null}
+                            {label ? <span class='v3-menus-label'>{label({ menu, activeIndex: activeIndex.value, index })}</span> : <span class='v3-menus-label'>{menu.label}</span>}
                             {
                               menu.children || menu.tip ?
                                 <div class='v3-menus-suffix'>
-                                  {suffix ? suffix({ menu, activeIndex, index }) : menu.children ? '▶' : menu.tip ? <span class='v3-menus-tip'>{menu.tip}</span> : null}
+                                  {suffix ? suffix({ menu, activeIndex: activeIndex.value, index }) : menu.children ? '▶' : menu.tip ? <span class='v3-menus-tip'>{menu.tip}</span> : null}
                                 </div> : null
                             }
                           </div >
