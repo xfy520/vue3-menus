@@ -331,13 +331,14 @@ export default defineComponent({
 
 |   属性   |                             描述                             |          类型          | 是否必填 |   默认值    |
 | :------: | :----------------------------------------------------------: | :--------------------: | :------: | :---------: |
-|  label   |                          菜单项名称                          |        `string`        |  `true`  |      —      |
+|  key   |                          菜单项键值                          |        `string`        |  `false`  |      —      |
+|  label   |                          菜单项名称             |`string` \| `(key?: string)=>string`|  `true`  |      —      |
 |  style   |                    每一项菜单的自定义样式                    |        `object`        | `false`  |    `{}`     |
-|   icon   | 图标参数，内部支持html字符串图标，传入组件时需要实现icon插槽 | `string` \| `其他类型` | `false`  | `undefined` |
-| disabled |                        是否禁用菜单项                        |       `boolean`        | `false`  | `undefined` |
-| divided  |                        是否显示分割线                        |       `boolean`        | `false`  | `undefined` |
-|   tip    |                     没项菜单后面的小提示                     |        `string`        | `false`  |    `''`     |
-|  hidden  |                         是否隐藏该项                         |       `boolean`        | `false`  | `undefined` |
+|   icon   | 图标参数，内部支持html字符串图标，传入组件时需要实现icon插槽 | `string`\|`(key?: string)=>string` \| `其他类型` | `false`  | `undefined` |
+| disabled |                        是否禁用菜单项            |`boolean` \| `(key?: string)=>boolean`| `false`  | `undefined` |
+| divided  |                        是否显示分割线            |`boolean` \| `(key?: string)=>boolean`| `false`  | `undefined` |
+|   tip    |                     没项菜单后面的小提示         |`string` \| `(key?: string)=>string`| `false`  |    `''`     |
+|  hidden  |                         是否隐藏该项             |`boolean` \| `(key?: string)=>boolean`| `false`  | `undefined` |
 | children |                        子菜单列表信息                        |  `MenusItemOptions[]`  | `false`  | `undefined` |
 |  enter   |       菜单项移入事件，返回`null`或`false`不展开子菜单        |      `Function()`      | `false`  | `undefined` |
 |  click   |        菜单项点击事件，返回`null`或`false`不关闭菜单         |      `Function()`      | `false`  | `undefined` |

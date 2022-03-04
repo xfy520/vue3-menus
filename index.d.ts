@@ -1,16 +1,17 @@
 type menusItemType = {
-  label: string;
-  style?: {
-    [key: string]: string | number
-  }
-  icon?: string | unknown;
-  disabled?: boolean;
-  divided?: boolean;
-  enter?: (menu: menusItemType, args: unknown) => unknown;
-  click?: (menu: menusItemType, args: unknown) => unknown;
-  children?: Array<menusItemType>;
-  tip?: string;
-  hidden?: boolean;
+    key?: string;
+    label: string|((key?: string) => string);
+    style?: {
+        [key: string]: string | number
+    }
+    icon?: string|((key?: string) => string)|unknown;
+    disabled?: boolean|((key?: string) => boolean);
+    divided?: boolean|((key?: string) => boolean);
+    enter?: (menu: menusItemType, args: unknown) => unknown;
+    click?: (menu: menusItemType, args: unknown) => unknown;
+    children?: Array<menusItemType>;
+    tip?: string|((key?: string) => string);
+    hidden?: boolean|((key?: string) => boolean);
 }
 
 type menusType = {
