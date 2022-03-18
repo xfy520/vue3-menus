@@ -69,7 +69,8 @@ const vue3MenusComponent = defineComponent({
     const hasIcon = computed(() => {
       for (let index = 0; index < props.menus.length; index++) {
         const menu = props.menus[index]
-        if (menu.icon !== undefined) {
+        const icon = getStrVal(menu, 'icon')
+        if (icon !== undefined) {
           return true
         }
       }
@@ -167,7 +168,7 @@ const vue3MenusComponent = defineComponent({
     function mouseEnter(event: any, menu: menusItemType, index: number) {
       event.preventDefault();
       activeIndex.value = index
-      if (!menu || menu.disabled || menu.hidden) {
+      if (!menu || getBoolVal(menu, 'disabled') || getBoolVal(menu, 'hidden')) {
         return;
       }
       if (self.instance) {
@@ -217,7 +218,7 @@ const vue3MenusComponent = defineComponent({
     }
     function mouseClick(event: any, menu: menusItemType) {
       event.preventDefault();
-      if (!menu || menu.disabled) {
+      if (!menu || getBoolVal(menu, 'disabled')) {
         event.stopPropagation();
         return;
       }
@@ -241,6 +242,38 @@ const vue3MenusComponent = defineComponent({
         render(null, this.container)
       })
     }
+    function getBoolVal(menuItem: menusItemType, prop: 'disabled'|'divided'|'hidden'): boolean {
+        const val = menuItem[prop]
+        if(!val) {
+            return false
+        }
+        if(typeof val === 'function') {
+            return val(menuItem.key)
+        }
+        return val
+    }
+    function getStrVal(menuItem: menusItemType, prop: 'label'|'tip'): string {
+        const val = menuItem[prop]
+        if(!val) {
+            return 
+        }
+        if(typeof val === 'function') {
+            return val(menuItem.key)
+        }
+        return val
+    }
+
+    function getIcon(menuItem: menusItemType): string|unknown {
+        const val = menuItem.icon
+        if(!val) {
+            return 
+        }
+        if(typeof val === 'function') {
+            return val(menuItem.key)
+        }
+        return val
+    }
+
     const { default: $default, label, icon, suffix } = slots
     const $class = ['v3-menus', attrs.class, props.menusClass]
     return () => (
@@ -252,7 +285,7 @@ const vue3MenusComponent = defineComponent({
                 <div class='v3-menus-body'>
                   {
                     props.menus.map((menu, index) => {
-                      if (menu.hidden) {
+                      if (getBoolVal(menu, 'hidden')) {
                         return null
                       }
                       if ($default) {
@@ -261,18 +294,24 @@ const vue3MenusComponent = defineComponent({
                             onClick={($event) => mouseClick($event, menu)} onMouseenter={($event) => mouseEnter($event, menu, index)}>{$default({ menu, activeIndex: activeIndex.value, index })}</div>
                         )
                       } else {
-                        let $class = [props.itemClass, 'v3-menus-item', menu.disabled ? 'v3-menus-disabled' : 'v3-menus-available']
-                        $class = $class.concat([menu.divided ? 'v3-menus-divided' : null, (!menu.disabled && activeIndex.value === index) ? 'v3-menus-active' : null])
+                        const disabled = getBoolVal(menu, 'disabled')
+                        const divided = getBoolVal(menu, 'divided')
+                        const tip = getStrVal(menu, 'tip')
+                        const lab = getStrVal(menu, 'label')
+                        const ico = getIcon(menu)
+
+                        let $class = [props.itemClass, 'v3-menus-item', disabled ? 'v3-menus-disabled' : 'v3-menus-available']
+                        $class = $class.concat([divided ? 'v3-menus-divided' : null, (!disabled && activeIndex.value === index) ? 'v3-menus-active' : null])
                         return (
                           <div style={menu.style} class={$class.join(' ')} onClick={($event) => mouseClick($event, menu)}
                             onMouseenter={($event) => mouseEnter($event, menu, index)} onContextmenu={($event) => mouseClick($event, menu)}
                           >
-                            {hasIcon.value ? <div class='v3-menus-icon '>{icon ? icon({ menu, activeIndex: activeIndex.value, index }) : <span v-html={menu.icon}></span>}</div> : null}
-                            {label ? <span class='v3-menus-label'>{label({ menu, activeIndex: activeIndex.value, index })}</span> : <span class='v3-menus-label'>{menu.label}</span>}
+                            {hasIcon.value ? <div class='v3-menus-icon '>{icon ? icon({ menu, activeIndex: activeIndex.value, index }) : <span v-html={ico}></span>}</div> : null}
+                            {label ? <span class='v3-menus-label'>{label({ menu, activeIndex: activeIndex.value, index })}</span> : <span class='v3-menus-label'>{lab}</span>}
                             {
-                              menu.children || menu.tip ?
+                              menu.children || tip ?
                                 <div class='v3-menus-suffix'>
-                                  {suffix ? suffix({ menu, activeIndex: activeIndex.value, index }) : menu.children ? '▶' : menu.tip ? <span class='v3-menus-tip'>{menu.tip}</span> : null}
+                                  {suffix ? suffix({ menu, activeIndex: activeIndex.value, index }) : menu.children ? '▶' : tip ? <span class='v3-menus-tip'>{tip}</span> : null}
                                 </div> : null
                             }
                           </div >
