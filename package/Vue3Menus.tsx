@@ -48,6 +48,10 @@ const props = {
   args: {
     type: [Object, Function, Array, Boolean, String],
     default: {}
+  },
+  closeEvents: {
+    type: Array as PropType<Array<string>>,
+    default: () => ['click', 'contextmenu', 'wheel', 'touchmove']
   }
 }
 
@@ -56,6 +60,7 @@ const vue3MenusComponent = defineComponent({
   inheritAttrs: false,
   props,
   setup(props, { slots, attrs }) {
+    const closeEvents = props.closeEvents
     const windowWidth = globalThis.document.documentElement.clientWidth
     const windowHeight = globalThis.document.documentElement.clientHeight
     const { proxy } = getCurrentInstance()
@@ -150,16 +155,16 @@ const vue3MenusComponent = defineComponent({
             }
           }
           setTimeout(() => {
-            globalThis.document.addEventListener('click', closeEvent);
-            globalThis.document.addEventListener('contextmenu', closeEvent);
-            globalThis.document.addEventListener('wheel', closeEvent);
+            closeEvents.forEach(e => {
+              globalThis.document.addEventListener(e, closeEvent);
+            });
           }, 0);
         })
       } else {
         activeIndex.value = -1
-        globalThis.document.removeEventListener('click', closeEvent);
-        globalThis.document.removeEventListener('contextmenu', closeEvent);
-        globalThis.document.removeEventListener('wheel', closeEvent);
+        closeEvents.forEach(e => {
+          globalThis.document.removeEventListener(e, closeEvent);
+        });
       }
     }, {
       immediate: true
